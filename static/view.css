@@ -1,0 +1,45 @@
+.logo_bg {
+    opacity: 0.3;
+    position: absolute;
+    left: 50%;
+    top: 60%;
+    transform: translate(-50%, -50%);
+    height: auto;
+}
+
+.main {
+    padding: 0px 30px 0px 30px;
+}
+
+.date {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.logo{
+    width: 200px;
+    display: flex;
+    padding-left: 500px;
+    flex-direction: column;
+}
+
+.head{
+    text-align: center;
+}
+
+p {
+    font-size: larger;
+    overflow: auto;
+    word-wrap: break-word;
+}
+
+strong {
+    border-bottom: 1px dashed black;
+    font-size: 25px;
+}
+
+.pie{
+    display: flex;
+    align-items: center;
+}

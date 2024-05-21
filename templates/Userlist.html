@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/userlist.css">
+    <link rel="stylesheet" href="static/homepage.css">
+    <script src="static/hompage.js">  </script>
+
+    <title>List View</title>
+</head>
+<body>
+    <div id="header">
+        <button class="button"><a href="/home">Home</a></button>
+        {% if role == 'admin' %}
+            <a href="/userlist">Users</a>
+            <a href="/admin">Data</a>
+            <div class="services">
+                <a href="#">Analysis</a>
+                <div class="services-content">
+                    <a href="/educationpiechart"><strong>Education Pie Chart</strong></a>
+                </div>
+            </div>
+        {% endif %}
+        <div class="services">
+            <a href="#">Contact Us</a>
+            <div class="services-content">
+                <p onclick="phone()"><i class="fa-solid fa-phone" style="color: #63E6BE;"></i> <b>9845256525</b></p>
+                <p onclick="mail()"><i class="fa-solid fa-envelope" style="color: #74C0FC;"></i> <b>example@.com</b></p>
+                <p onclick="facebook()"><i class="fa-brands fa-facebook" style="color: #74C0FC;"></i> <b>Facebook</b></p>
+            </div>
+        </div>
+        {% if role == 'user' %}
+            <a href="/data">Data</a>
+            <div class="services">
+                <a href="#">Services</a>
+                <div class="services-content">
+                    <a href="/dataform"><strong>Data Form</strong></a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <h1>List of Users</h1>
+    <table>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+        {% for item in items %}
+            <tr>
+                <td>{{ item[0] }}</td>
+                <td>{{ item[1] }}</td>
+                <td>{{ item[2] }}</td>
+                <td>
+                    <button class="action-button update"><a href="{{ url_for('updateuserrole', item_id=item[1]) }}">Update</a></button>
+                    <button class="action-button delete"><a href="{{ url_for('deleteuser', item_id=item[1]) }}">Delete</a></button>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

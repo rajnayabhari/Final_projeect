@@ -1,0 +1,96 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Update Details</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='homepage.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='dataupdate.css') }}">
+        <script src="static/hompage.js">  </script>
+
+    </head>
+    <body>
+        <div id="header">
+            <button class="button"><a href="/home">Home</a></button>
+            <a href="/intro">Introduction</a>
+            {% if role == 'admin' %}
+                <a href="/userlist">Users</a>
+                <a href="/admin">Data</a>
+                <div class="services">
+                    <a href="#">Analysis</a>
+                    <div class="services-content">
+                        <a href="/educationpiechart"><strong>Education Pie Chart</strong></a>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="services">
+                <a href="#">Contact Us</a>
+                <div class="services-content">
+                    <p onclick="phone()"><i class="fa-solid fa-phone" style="color: #63E6BE;"></i> <b>9845256525</b></p>
+                    <p onclick="mail()"><i class="fa-solid fa-envelope" style="color: #74C0FC;"></i> <b>example@.com</b></p>
+                    <p onclick="facebook()"><i class="fa-brands fa-facebook" style="color: #74C0FC;"></i> <b>Facebook</b></p>
+                </div>
+            </div>
+            {% if role == 'user' %}
+                <a href="/data">Data</a>
+                <div class="services">
+                    <a href="#">Services</a>
+                    <div class="services-content">
+                        <a href="/dataform"><strong>Data Form</strong></a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <br><br>
+        <h1>Update Details</h1>
+        <form method="POST">
+            <label for="fullname">Full Name:</label>
+            <input type="text" id="fullname" name="fullname" value="{{ item[2] }}" required><br>
+
+            <label for="mothername">Mother's Name:</label>
+            <input type="text" id="mothername" name="mothername" value="{{ item[3] }}" required><br>
+
+            <label for="fathername">Father's Name:</label>
+            <input type="text" id="fathername" name="fathername" value="{{ item[4] }}" required><br>
+
+            <label for="grandfathername">Grandfather's Name:</label>
+            <input type="text" id="grandfathername" name="grandfathername" value="{{ item[5] }}" required><br>
+
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" value="{{ item[6] }}" required><br>
+
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="Male" {% if item[7] == 'Male' %}selected{% endif %}>Male</option>
+                <option value="Female" {% if item[7] == 'Female' %}selected{% endif %}>Female</option>
+                <option value="Other" {% if item[7] == 'Other' %}selected{% endif %}>Other</option>
+            </select><br>
+
+            <label for="issueddate">Issued Date:</label>
+            <input type="date" id="issueddate" name="issueddate" value="{{ item[8] }}" required><br>
+
+            <select id="education" name="education">
+                <option value="Illiterate" {% if item[9] == "Illiterate" %} selected {% endif %}>Illiterate</option>
+                <option value="General read and write" {% if item[9] == "General read and write" %} selected {% endif %}>General Read and Write</option>
+                <option value="Under 10 class" {% if item[9] == "Under 10 class" %} selected {% endif %}>Under 10 class</option>
+                <option value="SEE" {% if item[9] == "SEE" %} selected {% endif %}>SEE</option>
+                <option value="+2" {% if item[9] == "+2" %} selected {% endif %}>+2</option>
+                <option value="Bachelor" {% if item[9] == "Bachelor" %} selected {% endif %}>Bachelor</option>
+                <option value="Master" {% if item[9] == "Master" %} selected {% endif %}>Master</option>
+            </select><br><br>
+            <label for="employed">Employment Status:</label>
+            <select id="employed" name="employed" required>
+                <option value="employed" {% if item[10] == 'employed' %}selected{% endif %}>Yes</option>
+                <option value="unemployed" {% if item[10] == 'unemployed' %}selected{% endif %}>No</option>
+            </select><br>
+
+            <label for="abroad">Abroad:</label>
+            <select id="abroad" name="abroad" required>
+                <option value="Yes" {% if item[11] == 'Yes' %}selected{% endif %}>Yes</option>
+                <option value="No" {% if item[11] == 'No' %}selected{% endif %}>No</option>
+            </select><br>
+
+            <button type="submit">Update</button>
+        </form>
+    </body>
+    </html>

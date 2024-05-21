@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Collection Form</title>
+    <link rel="stylesheet" href="static/birth_certificate.css">
+    <link rel="stylesheet" href="static/homepage.css">
+    <script src="static/hompage.js">  </script>
+
+    <style>
+        #reason-uneducation-container,
+        #reason-container,
+        #reason-abroad-container {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <button class="button"> <a href="/home">Home</a></button>
+        {% if role == 'admin' %}
+            <a href="/userlist">Users</a>
+            <a href="/admin">Data</a>
+            <div class="services">
+                <a href="#">Analysis</a>
+                <div class="services-content">
+                    <a href="/educationpiechart"><strong>Education Pie Chart</strong></a>
+                </div>
+            </div>
+        {% endif %}
+        <div class="services">
+            <a>Contact Us</a>
+            <div class="services-content">
+                <p onclick="phone()"><i class="fa-solid fa-phone" style="color: #63E6BE;"></i> <b>9845256525</b></p>
+                <p onclick="mail()"><i class="fa-solid fa-envelope" style="color: #74C0FC;"></i> <b>example@.com</b></p>
+                <p onclick="facebook()"><i class="fa-brands fa-facebook" style="color: #74C0FC;"></i> <b>Facebook</b></p>
+            </div>
+        </div>
+        {% if role == 'user' %}
+            <a href="/data">Data</a>
+            <div class="services">
+                <a href="#">Services</a>
+                <div class="services-content">
+                    <a href="/dataform"><strong>Data Form</strong></a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <div class="hero">
+        <div class="logo">
+            <img src="static/LOGO.png" alt="logo" height="150px" width="auto" />
+        </div>
+        <div class="head">
+            <h1>Data Collection Form</h1>
+        </div>
+        <form method="post" action="/registerdataform" enctype="multipart/form-data">
+            <div class="container">
+                <label for="formdate">Form Date:</label><br>
+                <input type="date" name="formdate" required><br><br>
+                <label for="name">Full Name:</label><br>
+                <input type="text" id="name" name="name" placeholder="Enter full name" required><br><br>
+                <label for="fathername">Father's Name:</label><br>
+                <input type="text" id="fathername" name="fathername" placeholder="Enter father's full name" required><br><br>
+                <label for="mothername">Mother's Name:</label><br>
+                <input type="text" id="mothername" name="mothername" placeholder="Enter mother's full name" required><br><br>
+                <label for="grandfathername">Grandfather's Name:</label><br>
+                <input type="text" id="grandfathername" name="grandfathername" placeholder="Enter grandfather's full name" required><br><br>
+                <label for="gender">Gender:</label><br>
+                <input type="radio" id="male" name="gender" value="male" required>
+                <label for="male">Male</label>
+                <input type="radio" id="female" name="gender" value="female" required>
+                <label for="female">Female</label><br><br>
+                <label for="dob">Date of Birth:</label><br>
+                <input type="date" id="dob" name="dob" required><br><br>
+                <label for="education">Education:</label><br>
+                <select id="education" name="education">
+                    <option value="Illiterate">Illiterate</option>
+                    <option value="General read and write">General Read and Write</option>
+                    <option value="Under 10 class">Under 10 class</option>
+                    <option value="SEE">SEE</option>
+                    <option value="+2">+2</option>
+                    <option value="Bachelor">Bachelor</option>
+                    <option value="Master">Master</option>
+                </select><br><br>
+                <div id="reason-uneducation-container">
+                    <label for="reason_for_uneducation">Reason for Uneducation:</label>
+                    <select id="reason_for_uneducation" name="reason_for_uneducation">
+                        <option value="Poverty">Poverty</option>
+                        <option value="Lack of access">Lack of Access to Schools</option>
+                        <option value="Cultural reasons">Cultural Reasons</option>
+                        <option value="Other">Other</option>
+                    </select><br><br>
+                </div>
+                <label for="employed">Employed:</label><br>
+                <input type="radio" id="employed-yes" name="employed" value="employed" required>
+                <label for="employed-yes">Yes</label>
+                <input type="radio" id="employed-no" name="employed" value="unemployed" required>
+                <label for="employed-no">No</label><br><br>
+                <div id="reason-container">
+                    <label for="reason_for_unemployment">Reason for Unemployment:</label>
+                    <select id="reason_for_unemployment" name="reason_for_unemployment">
+                        <option value="Corruption">Corruption</option>
+                        <option value="Lack of opportunity">Lack of opportunity</option>
+                        <option value="Lack of skill and education">Lack of skill and education</option>
+                        <option value="Low salary">Low salary</option>
+                        <option value="Other">Other</option>
+                    </select><br><br>
+                </div>
+                <label for="abroad">Abroad:</label><br>
+                <input type="radio" id="abroad-yes" name="abroad" value="yes" required>
+                <label for="abroad-yes">Yes</label>
+                <input type="radio" id="abroad-no" name="abroad" value="no" required>
+                <label for="abroad-no">No</label><br><br>
+                <div id="reason-abroad-container">
+                    <label for="reason_for_abroad">Reason for Going Abroad:</label>
+                    <select id="reason_for_abroad" name="reason_for_abroad">
+                        <option value="Financial Condition">Financial Condition</option>
+                        <option value="Lack of opportunity">Lack of opportunity</option>
+                        <option value="Lack of infrastructure">Lack of infrastructure</option>
+                        <option value="Low salary">Low salary</option>
+                        <option value="Other">Other</option>
+                    </select><br><br>
+                </div>
+            </div><br><br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+</body>
+<script src="static/script.js"></script>
+</html>

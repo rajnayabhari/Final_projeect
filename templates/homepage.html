@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Homepage</title>
+    <script
+      src="https://kit.fontawesome.com/14dea2b7a9.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="static/homepage.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@300;600&display=swap&family=Montserrat:wght@300;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="static/hompage.js"></script>
+  </head>
+  <body class="mainhome">
+    <div id="main">
+      <header id="header">
+        <div class="nav-container">
+          <div class="logout">
+            <form action="/logout" method="post">
+              <button type="submit" class="button">Logout</button>
+            </form>
+          </div>
+          <nav>
+            {% if role == 'admin' %}
+            <a href="/userlist">Users</a>
+            <a href="/admin">Data</a>
+            <a href="/messageview">Message</a>
+            <a href="/feedbackview">Feedback</a>
+            <div class="dropdown">
+              <a href="#">Analysis</a>
+              <div class="dropdown-content">
+                <a href="/educationpiechart">
+                  <strong>Education Pie Chart</strong></a>
+                  <a href="/datasummary">
+                  <strong>Data summary</strong>
+                  </a>
+              </div>
+            </div>
+            {% endif %}
+            <div class="dropdown">
+              <a href="#">Contact Us</a>
+              <div class="dropdown-content">
+                <p onclick="phone()">
+                  <i class="fa-solid fa-phone" style="color: #63e6be"></i>
+                  <b>9845256525</b>
+                </p>
+                <p onclick="mail()">
+                  <i class="fa-solid fa-envelope" style="color: #74c0fc"></i>
+                  <b>example@.com</b>
+                </p>
+                <p onclick="facebook()">
+                  <i class="fa-brands fa-facebook" style="color: #74c0fc"></i>
+                  <b>Facebook</b>
+                </p>
+              </div>
+            </div>
+            {% if role == 'user' %}
+            <a href="/data">Data</a>
+            <div class="dropdown">
+              <a href="#">Services</a>
+              <div class="dropdown-content">
+                <a href="/dataform"><strong>Data Form</strong></a>
+              </div>
+            </div>
+            {% endif %}
+          </nav>
+        </div>
+      </header>
+
+      <div id="dataSummaryBox" class="content-box">
+        <h2>Welcome, {{name}}!</h2>
+        <p>You can register and view data.</p>
+      </div>
+
+      <div id="dataSummaryBox" class="content-box">
+        <h2>About Our System</h2>
+        <p>
+          Welcome to our cutting-edge Digital Data Collection System, where
+          precision meets efficiency. Designed to streamline your data gathering
+          process, our system offers seamless integration, real-time analytics,
+          and robust security features. Whether you're conducting surveys,
+          research, or fieldwork, our solution ensures accurate and reliable
+          data capture, helping you make informed decisions with confidence.
+          Embrace the future of data collection today!
+        </p>
+        <h3>Our Key Features:</h3>
+        <ul>
+          <li>Data Collection</li>
+          <li>Data Analysis</li>
+          <li>Data Summary</li>
+        </ul>
+      </div>
+
+      {% if role == 'user' %}
+      <div id="dataSummaryBox1" class="content-box">
+        <h2>Feedback/Message</h2>
+        <div class="info">
+          <a href="/message">Message</a>
+          <a href="/feedback">Feedback</a>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </body>
+</html>

@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+    <link rel="stylesheet" href="../static/homepage.css">
+    <link rel="stylesheet" href="../static/userlist.css">
+
+    <title>List View</title>
+</head>
+<body>
+    <div id="header">
+        <button class="button"><a href="/home">Home</a></button>
+        {% if role == 'admin' %}
+            <a href="/userlist">Users</a>
+            <a href="/admin">Data</a>
+            <div class="services">
+                <a href="#">Analysis</a>
+                <div class="services-content">
+                    <a href="/educationpiechart"><strong>Education Pie Chart</strong></a>
+                </div>
+            </div>
+        {% endif %}
+        <div class="services">
+            <a href="#">Contact Us</a>
+            <div class="services-content">
+                <p onclick="phone()"><i class="fa-solid fa-phone" style="color: #63E6BE;"></i> <b>9845256525</b></p>
+                <p onclick="mail()"><i class="fa-solid fa-envelope" style="color: #74C0FC;"></i> <b>example@.com</b></p>
+                <p onclick="facebook()"><i class="fa-brands fa-facebook" style="color: #74C0FC;"></i> <b>Facebook</b></p>
+            </div>
+        </div>
+        {% if role == 'user' %}
+            <a href="/data">Data</a>
+            <div class="services">
+                <a href="#">Services</a>
+                <div class="services-content">
+                    <a href="/dataform"><strong>Data Form</strong></a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <br><br>
+    <h1>data</h1>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Issuedate</th>
+            <th>Employeed</th>
+            <th>Education</th>
+            <th>Abroad</th>
+            <th>Action</th>
+        </tr>
+        {% for item in items %}
+            <tr>
+                <td>{{ item[1] }}</td>
+                <td>{{ item[2] }}</td>
+                <td>{{ item[3] }}</td>
+                <td>{{ item[4] }}</td>
+                <td>{{ item[5] }}</td>
+                <td>{{ item[6] }}</td>
+                <td>
+                <button class="action-button update"><a href="{{ url_for('update', item_id=item[0]) }}">Update</a></button>
+                <button class="action-button delete"><a href="{{ url_for('delete', item_id=item[0]) }}">Delete</a></button>
+
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+<h2>Total no of data={{total}}</h2>
+</body>
+</html>
