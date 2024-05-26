@@ -1,47 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Homepage</title>
-    <script
-      src="https://kit.fontawesome.com/14dea2b7a9.js"
-      crossorigin="anonymous"
-    ></script>
-    <link rel="stylesheet" href="static/homepage.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@300;600&display=swap&family=Montserrat:wght@300;600&display=swap"
-      rel="stylesheet"
-    />
-    <script src="static/hompage.js"></script>
-  </head>
-  <body class="mainhome">
-    <div id="main">
-      <header id="header">
-        <div class="nav-container">
-          <div class="logout">
-            <form action="/logout" method="post">
-              <button type="submit" class="button">Logout</button>
-            </form>
-          </div>
-          <nav>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Homepage</title>
+  <script src="https://kit.fontawesome.com/14dea2b7a9.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../static/home.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@300;600&display=swap&family=Montserrat:wght@300;600&display=swap" rel="stylesheet" />
+  <script src="static/hompage.js"></script>
+</head>
+
+<body class="mainhome">
+  <div id="main">
+    <header id="header">
+      <div class="nav-container">
+        <div class="logo">
+          <h1>DataSys</h1>
+        </div>
+        <nav>
+          <input type="checkbox" id="menu-toggle">
+          <label for="menu-toggle" class="menu-icon"><i class="fa fa-bars"></i></label>
+          <div class="menu">
             {% if role == 'admin' %}
+            <a href="/intro">Intro</a>
+            <form method="POST" action="/reasonbargraph">
+              <label>Bargraph</label>
+              <br><br>
+              <select name="criteria1" >
+                <option value="education" >Education</option>
+                <option value="employeed" >Employment</option>
+                <option value="abroad" >Abroad</option>
+              </select>
+            <select name="criteria2">
+              <option value="education" >Education</option>
+              <option value="gender" > Gender</option>
+              <option value="employeed" >Employment</option>
+              <option value="abroad" >Abroad</option>
+            </select>
+            <button type="submit">Submit</button>
+          </form>
             <a href="/userlist">Users</a>
             <a href="/admin">Data</a>
             <a href="/messageview">Message</a>
-            <a href="/feedbackview">Feedback</a>
             <div class="dropdown">
               <a href="#">Analysis</a>
               <div class="dropdown-content">
-                <a href="/educationpiechart">
-                  <strong>Education Pie Chart</strong></a>
-                  <a href="/datasummary">
-                  <strong>Data summary</strong>
-                  </a>
+                <a href="/piechart"><strong>Distribution Pie Chart</strong></a>
+                <a href="/reasonpiechart"><strong>Reason Pie Chart</strong></a>
+                <a href="/datasummary"><strong>Data Summary</strong></a>
               </div>
             </div>
             {% endif %}
-            <div class="dropdown">
+            <div class="dropdown1">
               <a href="#">Contact Us</a>
               <div class="dropdown-content">
                 <p onclick="phone()">
@@ -67,43 +78,69 @@
               </div>
             </div>
             {% endif %}
-          </nav>
-        </div>
-      </header>
-
-      <div id="dataSummaryBox" class="content-box">
-        <h2>Welcome, {{name}}!</h2>
-        <p>You can register and view data.</p>
+            <form action="/logout" method="post" class="logout-form">
+              <button type="submit" class="button">Logout</button>
+            </form>
+          </div>
+        </nav>
       </div>
+    </header>
 
-      <div id="dataSummaryBox" class="content-box">
-        <h2>About Our System</h2>
-        <p>
-          Welcome to our cutting-edge Digital Data Collection System, where
-          precision meets efficiency. Designed to streamline your data gathering
-          process, our system offers seamless integration, real-time analytics,
-          and robust security features. Whether you're conducting surveys,
-          research, or fieldwork, our solution ensures accurate and reliable
-          data capture, helping you make informed decisions with confidence.
-          Embrace the future of data collection today!
-        </p>
-        <h3>Our Key Features:</h3>
-        <ul>
-          <li>Data Collection</li>
-          <li>Data Analysis</li>
-          <li>Data Summary</li>
-        </ul>
-      </div>
-
-      {% if role == 'user' %}
-      <div id="dataSummaryBox1" class="content-box">
-        <h2>Feedback/Message</h2>
-        <div class="info">
-          <a href="/message">Message</a>
-          <a href="/feedback">Feedback</a>
-        </div>
-      </div>
-      {% endif %}
+    <div id="welcomeBox" class="content-box welcome-box">
+      <h2>Welcome, {{name}}!</h2>
+      <p>You can register and view data.</p>
     </div>
-  </body>
+
+    <div id="aboutBox" class="content-box">
+      <h2>About Our System</h2>
+      <p>
+        Welcome to our cutting-edge Digital Data Collection System, where
+        precision meets efficiency. Designed to streamline your data gathering
+        process, our system offers seamless integration, real-time analytics,
+        and robust security features. Whether you're conducting surveys,
+        research, or fieldwork, our solution ensures accurate and reliable
+        data capture, helping you make informed decisions with confidence.
+        Embrace the future of data collection today!
+      </p>
+    </div>
+
+    <div id="keyFeaturesBox" class="feature-content-box">
+      <h2>Our Key Features</h2>
+      <div class="features">
+      <div class="campus-col">
+        <h3>Data Collection</h3>
+        <img src="static/datacoll.jpg" alt="datacoll">
+        <div class="layer">
+          <h3>Data collection is very important </h3>
+        </div>
+      </div >
+
+      <div class="campus-col">
+        <h3>Data Analysis</h3>
+        <img src="static/dataana.jpeg" alt="data analysis">
+        <div class="layer">
+          <h3> Data analysis is very important</h3>
+        </div>
+      </div>
+      <div class="campus-col">
+        <h3>Data Summary</h3>
+        <img src="static/datasum.jpg" alt="data summary">
+        <div class="layer">
+          <h3>Data summary is very important </h3>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    {% if role == 'user' %}
+    <div id="messageBox" class="content-box">
+      <h2>Message</h2>
+      <div class="info">
+        <a href="/message">Message</a>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</body>
+
 </html>

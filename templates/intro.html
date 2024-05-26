@@ -4,43 +4,117 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="static/homepage.css">
+    <link rel="stylesheet" href="../static/home.css">
+    <link rel="stylesheet" href="../static/userlist.css">
+    
     <script src="static/hompage.js">  </script>
 
 </head>
-<body>
-    <div id="header">
-        <button class="button"> <a href="/home">Home</a></button>
-        <a href="/intro">Introduction</a>
-        {% if role == 'admin' %}
+<body style="background-color: grey;">
+  <header id="header">
+    <div class="nav-container">
+      <div class="logo">
+        <h1>DataSys</h1>
+      </div>
+      <nav>
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle" class="menu-icon"><i class="fa fa-bars"></i></label>
+        <div class="menu">
+          <a href="/home">Home</a>
+          {% if role == 'admin' %}
+          <a href="/intro">Intro</a>
           <a href="/userlist">Users</a>
           <a href="/admin">Data</a>
-          <div class="services">
+          <a href="/messageview">Message</a>
+          <div class="dropdown">
             <a href="#">Analysis</a>
-            <div class="services-content">
-              <a href="/educationpiechart"><strong>Education Pie Chart</strong></a>
+            <div class="dropdown-content">
+              <a href="/piechart"><strong>Distribution Pie Chart</strong></a>
+              <a href="/reasonpiechart"><strong>Reason Pie Chart</strong></a>
+              <a href="/datasummary"><strong>Data Summary</strong></a>
             </div>
           </div>
-        {% endif %}
-        <div class="services">
-          <a>Contact Us</a>
-          <div class="services-content">
-            <p onclick="phone()"><i class="fa-solid fa-phone" style="color: #63E6BE;"></i> <b>9845256525</b></p>
-            <p onclick="mail()"><i class="fa-solid fa-envelope" style="color: #74C0FC;"></i> <b>example@.com</b></p>
-            <p onclick="facebook()"><i class="fa-brands fa-facebook" style="color: #74C0FC;"></i> <b>Facebook</b></p>
-          </div>
-        </div>
-        {% if role == 'user' %}
-        <a href="/data">Data</a>
-          <div class="services">
+          {% endif %}
+          {% if role == 'user' %}
+          <a href="/data">Data</a>
+          <div class="dropdown">
             <a href="#">Services</a>
-            <div class="services-content">
+            <div class="dropdown-content">
               <a href="/dataform"><strong>Data Form</strong></a>
             </div>
           </div>
-        {% endif %}
-      </div>
+          {% endif %}
+          <form action="/logout" method="post" class="logout-form">
+            <button type="submit" class="button">Logout</button>
+          </form>
+        </div>
+      </nav>
+    </div>
+  </header>
    <!--    <h1><a href="/home">Home</a></h1>  -->
-    <p> this is introduction</p>
+   
+   <div class="grid-container">
+    <div class="side-paragraph">
+      <h1 style="color: rgb(19, 19, 157);">Introduction</h1>
+      In today's digitally connected world, the need for efficient and reliable data collection systems is more critical 
+      than ever, especially in understanding key socio-economic indicators like literacy levels, employment status, and 
+      migration patterns. Data collection software is a computerised system for the collection and storage of qualitative
+       and quantitative data in an electronic form.The benefits of using data collection systems is that they eliminate the
+        use of paper surveys and allow data to be quickly exported for data analysis and reporting. [1]
+        <br/><br/>
+
+Focusing specifically on literacy and employment, and whether individuals have migrated abroad from a certain area, a
+ digital data collection system offers a streamlined approach to gathering and analyzing pertinent information. [2]
+  This introduction aims to provide an overview of a digital data collection system tailored to capturing data related 
+  to literacy, employment, and migration status in a specific geographical area. By harnessing the power of digital
+  technologies, this system facilitates the collection, management, and analysis of data with greater accuracy, efficiency,
+   and accessibility.
+<br/><br/>
+In the conclusion, the significance of such a system lies in its ability to inform policy decisions, interventions,
+ and research efforts aimed at addressing disparities in literacy levels, unemployment rates, and migration trends.
+  By collecting data in a digital format, this system offers advantages such as real-time data capture, increased 
+  accessibility, and streamlined data management processes. Overall, data from the field is transmitted to a server/remote 
+  location (manually or electronically) and can be made available in aggregate tables and customized reports can be generated 
+  for analysis and sharing.
+  <br/><br/>
+  <h2 style="color: rgb(19, 19, 157);">Problem Statement</h2>
+  <p>
+    Traditional municipal governments often struggle with inefficiencies and insufficient citizen engagement,
+     hindering their ability to meet the evolving needs of communities in the digital age. Manual processes, 
+     Data loss and Lack of data filtration contribute to bureaucratic red tape and disparities in service delivery. 
+     Key challenges facing municipalities include:
+
+<p class="list">
+  <ol>
+    <li>
+      Manual and Inefficient Processes:
+    </li>
+    Traditional data collection often rely on outdated, paper-based processes that are time-consuming and prone to errors.
+Manual workflows hinder operational efficiency, leading to delays in service delivery, permit processing, and administrative tasks.
+    <li>
+      Data loss:
+    </li>
+    Since all record are being kept in paper files, they are easily damageable than in comparison to digital copy.
+    <li>Lack of data filtration:</li>
+    When records are kept manually via hand, they are very hard to filter out but in digitalized system it is easier and faster.
+
+  </ol>
+</p>
+  </p>
+  <h2 style="color: rgb(19, 19, 157);">Objectives</h2>
+  <ol class="objectives">
+    <li>To make it easier to know literacy and employment rate of municipality.
+      </li>
+      <li>
+        To make data digitalized for future use.
+    
+      </li>
+      <li>
+        To provide data for future program planning for improving living standard.
+      </li>
+  </ol>
+    </div>
+   </div>
+   <p> </p>
 </body>
 </html>

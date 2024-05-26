@@ -3,45 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <title>Pie Chart</title>
-    <link rel="stylesheet" href="static/homepage.css">
+    <link rel="stylesheet" href="../static/home.css">
     <script src="static/hompage.js">  </script>
+    <link rel="stylesheet" href="static/userlist.css">
+
 
 </head>
 <body>
-    <div id="header">
-        <button class="button"> <a href="/home">Home</a></button>
-        <a href="/intro">Introduction</a>
-        {% if role == 'admin' %}
-          <a href="/userlist">Users</a>
-          <a href="/admin">Data</a>
-          <div class="services">
-            <a href="#">Analysis</a>
-            <div class="services-content">
-              <a href="/educationpiechart"><strong>Education Pie Chart</strong></a>
+    <header id="header">
+        <div class="nav-container">
+          <div class="logo">
+            <h1>DataSys</h1>
+          </div>
+          <nav>
+            <input type="checkbox" id="menu-toggle">
+            <label for="menu-toggle" class="menu-icon"><i class="fa fa-bars"></i></label>
+            <div class="menu">
+                <a href="/home">Home</a>
+              {% if role == 'admin' %}
+              <a href="/intro">Intro</a>
+              <a href="/userlist">Users</a>
+              <a href="/admin">Data</a>
+              <a href="/messageview">Message</a>
+              <div class="dropdown">
+                <a href="#">Analysis</a>
+                <div class="dropdown-content">
+                  <a href="/piechart"><strong>Distribution Pie Chart</strong></a>
+                  <a href="/reasonpiechart"><strong>Reason Pie Chart</strong></a>
+                  <a href="/datasummary"><strong>Data Summary</strong></a>
+                </div>
+              </div>
+              {% endif %}
+
+              {% if role == 'user' %}
+              <a href="/data">Data</a>
+              <div class="dropdown">
+                <a href="#">Services</a>
+                <div class="dropdown-content">
+                  <a href="/dataform"><strong>Data Form</strong></a>
+                </div>
+              </div>
+              {% endif %}
+              <form action="/logout" method="post" class="logout-form">
+                <button type="submit" class="button">Logout</button>
+              </form>
             </div>
-          </div>
-        {% endif %}
-        <div class="services">
-          <a>Contact Us</a>
-          <div class="services-content">
-            <p onclick="phone()"><i class="fa-solid fa-phone" style="color: #63E6BE;"></i> <b>9845256525</b></p>
-            <p onclick="mail()"><i class="fa-solid fa-envelope" style="color: #74C0FC;"></i> <b>example@.com</b></p>
-            <p onclick="facebook()"><i class="fa-brands fa-facebook" style="color: #74C0FC;"></i> <b>Facebook</b></p>
-          </div>
+          </nav>
         </div>
-        {% if role == 'user' %}
-        <a href="/data">Data</a>
-          <div class="services">
-            <a href="#">Services</a>
-            <div class="services-content">
-              <a href="/dataform"><strong>Data Form</strong></a>
-            </div>
-          </div>
-        {% endif %}
-      </div>
-    <h1 style="text-align: center;">Education level Distribution</h1>
-    <div class="pie" >
+      </header>
+    <div class="pie" style="text-align: center;">
+      <h1 >Education Distribution</h1>
         <img src="{{ url_for('static', filename='pie_chart.png') }}" width="50%" height="50%" alt="Pie Chart">
     </div>
+    <div class="pie" style="text-align: center;" >
+      <h1>Employement Distribution</h1>
+
+      <img src="{{ url_for('static', filename='pie_chart1.png') }}" width="50%" height="50%" alt="Pie Chart">
+  </div>
+  <div class="pie" style="text-align: center;">
+    <h1>Abroad Distribution</h1>
+
+    <img src="{{ url_for('static', filename='pie_chart2.png') }}" width="50%" height="50%" alt="Pie Chart">
+</div>
 </body>
 </html>

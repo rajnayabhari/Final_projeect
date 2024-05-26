@@ -1,0 +1,50 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 20px;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    text-align: center;
+    /* align-items: center;
+    display: block;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 100px; */
+}
+
+.content:hover{
+    scale: 1.2;
+}
+
+.content {
+    background-color: rgb(120, 197, 171);
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    flex: 1 1 calc(33% - 40px);
+    box-sizing: border-box;
+    margin: 10px;
+    max-width: 30%;
+    min-width: 200px;
+}
+
+h2 {
+    color: #333;
+    font-size: 1.5em;
+    margin: 0;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.content h2:before {
+    content: "\2022 ";
+    color: #007BFF;
+    font-weight: bold;
+}

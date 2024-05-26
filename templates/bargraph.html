@@ -2,13 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update User Role</title>
+    <title>Pie Chart</title>
     <link rel="stylesheet" href="../static/home.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='updaterole.css') }}">
-    <link rel="stylesheet" href="../static/userlist.css"/>
     <script src="static/hompage.js">  </script>
-
+    <link rel="stylesheet" href="static/userlist.css">
 
 </head>
 <body>
@@ -53,16 +50,9 @@
           </nav>
         </div>
       </header>
-    <br><br>
-    <h1 style="text-align: center;"><a href="/home">Home</a></h1>
-    <h1>Update Role for {{ email }}</h1>
-    <form action="{{ url_for('updateuserrole', item_id=email) }}" method="post">
-        <label for="role">Role:</label>
-        <Select id="role" name="role">
-            <option value="admin">Admin</option>
-            <option value="user">User</option>
-        </Select>
-        <button type="submit">Update</button>
-    </form>
+    <div class="pie" style="text-align: center;">
+      <h1 >{{criteria1}} VS {{criteria2}}</h1>
+        <img src="{{ url_for('static', filename='bar_chart1.png') }}" width="50%" height="50%" alt="Bar Chart">
+    </div>
 </body>
 </html>
