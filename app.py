@@ -106,7 +106,7 @@ def login():
                     session['username']=user[1]
                     return redirect('/home')
     except Exception as e:
-        return render_template('signin.html', info=e.capitalize(),role=session['role'])
+        return render_template('signin.html', info=str(e), role=session['role'])
 
     return render_template('signin.html', info="Invalid email or password")
 
