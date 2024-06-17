@@ -36,10 +36,10 @@ def database():
             PASSWORD VARCHAR(250) NOT NULL,
             ROLE VARCHAR(250) NOT NULL
             );
-            INSERT INTO LOGIN (username, password, email, role)
+            INSERT INTO LOGIN1 (username, password, email, role)
             SELECT %s, %s, %s, %s
             WHERE NOT EXISTS (
-                SELECT 1 FROM LOGIN WHERE email = %s
+                SELECT 1 FROM login1 WHERE email = %s
             );
             """, (username, hashed_password, email, 'admin', email)); 
             cursor.execute("""
@@ -60,7 +60,7 @@ def database():
             reason_for_uneducated VARCHAR(250) DEFAULT '0',
             reason_for_abroad VARCHAR(250) DEFAULT '0',
             USER_ID INT NOT NULL,
-            FOREIGN KEY (USER_ID) REFERENCES LOGIN (USER_ID)
+            FOREIGN KEY (USER_ID) REFERENCES login1 (USER_ID)
             );
             """)
             
@@ -70,7 +70,7 @@ def database():
             message varchar(250) not null,
             username varchar(250)not null,   
             USER_ID INT NOT NULL,
-            FOREIGN KEY (USER_ID) REFERENCES LOGIN (USER_ID)
+            FOREIGN KEY (USER_ID) REFERENCES login1 (USER_ID)
                 );
             """)
             
