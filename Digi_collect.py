@@ -7,6 +7,7 @@ import psycopg2
 import re
 from functools import wraps
 from flask import Flask, request, render_template, redirect, session,url_for,abort
+from database import get_db_connection,database
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -43,63 +44,10 @@ def login_required(f):
 
 @app.route("/")
 def root():
-    email='raj@gmail.com'       
-    password='admin'
-    username='raj'
-    hashed_password = hash_password(password)
-
     try:
-        with get_db_connection() as conn:
-            with conn.cursor() as cursor:
-                cursor.execute("""
-                CREATE TABLE IF NOT EXISTS LOGIN(
-                USER_ID SERIAL PRIMARY KEY NOT NULL,
-                USERNAME VARCHAR(20) NOT NULL,
-                EMAIL VARCHAR(100) NOT NULL UNIQUE,
-                PASSWORD VARCHAR(64) NOT NULL,
-                ROLE VARCHAR(20) NOT NULL
-                );
-                INSERT INTO LOGIN (username, password, email, role)
-                SELECT %s, %s, %s, %s
-                WHERE NOT EXISTS (
-                    SELECT 1 FROM LOGIN WHERE email = %s
-                );
-                """, (username, hashed_password, email, 'admin', email)); 
-                cursor.execute("""
-                CREATE TABLE IF NOT EXISTS Detail (
-                Id_no SERIAL PRIMARY KEY NOT NULL,
-                Certificate_no VARCHAR(20) NOT NULL,
-                fullname VARCHAR(60) NOT NULL,
-                mothername VARCHAR(60) NOT NULL,
-                fathername VARCHAR(60) NOT NULL,
-                grandfathername VARCHAR(60) NOT NULL,
-                dob VARCHAR(20) NOT NULL,
-                gender VARCHAR(10) NOT NULL,
-                issueddate VARCHAR(20) NOT NULL,
-                education VARCHAR(40) NOT NULL,
-                employeed VARCHAR(40) NOT NULL,
-                abroad VARCHAR(40) NOT NULL,
-                reason_for_unemployment VARCHAR(100) DEFAULT '0',
-                reason_for_uneducated VARCHAR(100) DEFAULT '0',
-                reason_for_abroad VARCHAR(100) DEFAULT '0',
-                USER_ID INT NOT NULL,
-                FOREIGN KEY (USER_ID) REFERENCES LOGIN (USER_ID)
-                );
-                """)
-                
-                cursor.execute("""
-                CREATE TABLE IF NOT EXISTS message(
-                subject varchar(250) not null,
-                message varchar(250) not null,
-                username varchar(250)not null,   
-                USER_ID INT NOT NULL,
-                FOREIGN KEY (USER_ID) REFERENCES LOGIN (USER_ID)
-                    );
-                """)
-                
-            conn.commit()
+        database()
     except Exception as e:
-        return render_template('error.html', info=str(e))
+        return render_template('error.html', info=str(e),role=session['role'])
     return render_template("signin.html")
 
 
@@ -134,7 +82,7 @@ def register():
         return render_template('signin.html')
         
     except Exception as e:
-        return render_template('signin.html', info=str(e))     
+        return render_template('signin.html', info=str(e),role=session['role'])     
     
 @app.route('/signin', methods=['POST'])
 def login():
@@ -152,7 +100,7 @@ def login():
                     session['username']=user[1]
                     return redirect('/home')
     except Exception as e:
-        return render_template('signin.html', info="Error occurred during login process")
+        return render_template('signin.html', info=e.capitalize(),role=session['role'])
 
     return render_template('signin.html', info="Invalid email or password")
 
@@ -215,16 +163,14 @@ def search():
                 role=session['role']
 
                 if data:
-                    if session['role'] == 'admin':
                         return render_template('admin.html', items=data, total=total,role=role)
-                    else:
-                        return render_template('collector_data_view.html', items=data, total=total,role=role)
+
 
                 else:
-                    return render_template("error.html", info="Certificate not found!!")
+                    return render_template("admin.html", info="No coressponding data!!")
 
     except Exception as e:
-        return render_template('error.html', info=str(e))
+        return render_template('error.html', info=str(e),role=session['role'])
 
    
     
@@ -240,7 +186,7 @@ def home():
                     name=session['username']
             return render_template('homepage.html', role=role,name=name.capitalize())
         except Exception as e:
-            return render_template('signin.html', info=str(e))
+            return render_template('signin.html', info=str(e),role=session['role'])
     else:
         return redirect('/')
         
@@ -334,7 +280,7 @@ def userlist():
                 
         return render_template('Userlist.html', items=items,role=role)
     except Exception as e:
-            return render_template('error.html',info= f"An error occurred: {str(e)}")
+            return render_template('error.html',info= f"An error occurred: {str(e)}",role=session['role'])
             
 
 @app.route('/admin', methods=['GET'])
@@ -386,7 +332,7 @@ def deleteuser(item_id):
                 conn.commit()
     
     except Exception as e:
-        return render_template('error.html',info= f"User cannot be deleted first delete data{str(e)}")
+        return render_template('error.html',info= f"User cannot be deleted first delete data{str(e)}",role=session['role'])
     return redirect(url_for('userlist'))     
     
 @app.route('/data', methods=['GET'])
@@ -414,7 +360,7 @@ def view_collector():
                 else:
                     return render_template('collector_data_view.html', items=items,role=role,total=total)
     except Exception as e:
-        return render_template('error.html',info= f"An error occurred: {str(e)}")
+        return render_template('error.html',info= f"An error occurred: {str(e)}",role=session['role'])
 
     
     
@@ -491,7 +437,7 @@ def update(item_id):
                 return abort(403)  # Forbidden if the role is neither admin nor collector
         except Exception as e:
             # Render error template with relevant error message
-            return render_template('error.html', info=f"Update error: {e}")
+            return render_template('error.html', info=f"Update error: {e}",role=session['role'])
     else:
         try:
             with get_db_connection() as conn:
@@ -509,7 +455,7 @@ def update(item_id):
                 return render_template('error.html', info="Certificate not found"), 404
         except Exception as e:
             # Render error template with relevant error message
-            return render_template('error.html', info=f"Update page loading error: {e}")
+            return render_template('error.html', info=f"Update page loading error: {e}",role=session['role'])
 
 
 @app.route('/delete/<int:item_id>', methods=['GET'])
@@ -524,88 +470,92 @@ def delete(item_id):
             conn.close()
             return redirect(url_for('admin'))
         except Exception as e:
-            return render_template('error,html',info=f"An error occurred: {str(e)}")
+            return render_template('error,html',info=f"An error occurred: {str(e)}",role=session['role'])
         
 
 @app.route('/piechart')
-@login_required
 def generate_pie_chart():
-    def fetch_data():
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute("SELECT education FROM detail")
-        data = cursor.fetchall()
-        cursor.execute("SELECT employeed FROM detail")
-        data1 = cursor.fetchall()
-        cursor.execute("SELECT abroad FROM detail")
-        data2 = cursor.fetchall()
-        cursor.close()
-        conn.close()
-        return data, data1, data2
+    try:
+        def fetch_data():
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("SELECT education FROM detail")
+            data = cursor.fetchall()
+            cursor.execute("SELECT employeed FROM detail")
+            data1 = cursor.fetchall()
+            cursor.execute("SELECT abroad FROM detail")
+            data2 = cursor.fetchall()
+            cursor.close()
+            conn.close()
+            return data, data1, data2
 
-    data, data1, data2 = fetch_data()
-    
-    def generate_chart(data, filename):
-        counts = {}
-        for row in data:
-            key = row[0]
-            counts[key] = counts.get(key, 0) + 1
+        data, data1, data2 = fetch_data()
+        
+        def generate_chart(data, filename):
+            counts = {}
+            for row in data:
+                key = row[0]
+                counts[key] = counts.get(key, 0) + 1
 
-        labels = counts.keys()
-        sizes = counts.values()
+            labels = counts.keys()
+            sizes = counts.values()
 
-        plt.figure(figsize=(8, 6))
-        plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=140)
-        plt.axis('equal')
-        plt.savefig(f'static/{filename}')
-        plt.close()
+            plt.figure(figsize=(8, 6))
+            plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=140)
+            plt.axis('equal')
+            plt.savefig(f'static/{filename}')
+            plt.close()
 
-    generate_chart(data, 'pie_chart.png')
-    generate_chart(data1, 'pie_chart1.png')
-    generate_chart(data2, 'pie_chart2.png')
-    role=session['role']
+        generate_chart(data, 'pie_chart.png')
+        generate_chart(data1, 'pie_chart1.png')
+        generate_chart(data2, 'pie_chart2.png')
+        role=session['role']
 
-    return render_template('piechart.html',role=role)
-
+        return render_template('piechart.html',role=role)
+    except Exception as e:
+        return render_template('error,html',info=f"An error occurred: {str(e)}",role=session['role'])
 @app.route('/reasonpiechart')
 @login_required
 def generate_reason_pie_chart():
-    def fetch_data():
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute("SELECT reason_for_uneducated FROM detail where reason_for_uneducated <> '0' ")
-        data = cursor.fetchall()
-        cursor.execute("SELECT reason_for_unemployment from detail where reason_for_unemployment <> '0'")
-        data1 = cursor.fetchall()
-        cursor.execute("SELECT reason_for_abroad from detail where reason_for_abroad <> '0'")
-        data2 = cursor.fetchall()
-        cursor.close()
-        conn.close()
-        return data, data1, data2
+    try:
+        def fetch_data():
+                conn = get_db_connection()
+                cursor = conn.cursor()
+                cursor.execute("SELECT reason_for_uneducated FROM detail where reason_for_uneducated <> '0' ")
+                data = cursor.fetchall()
+                cursor.execute("SELECT reason_for_unemployment from detail where reason_for_unemployment <> '0'")
+                data1 = cursor.fetchall()
+                cursor.execute("SELECT reason_for_abroad from detail where reason_for_abroad <> '0'")
+                data2 = cursor.fetchall()
+                cursor.close()
+                conn.close()
+                return data, data1, data2
 
-    data, data1, data2 = fetch_data()
-    
-    def generate_chart(data, filename):
-        counts = {}
-        for row in data:
-            key = row[0]
-            counts[key] = counts.get(key, 0) + 1
+        data, data1, data2 = fetch_data()
 
-        labels = counts.keys()
-        sizes = counts.values()
+        def generate_chart(data, filename):
+            counts = {}
+            for row in data:
+                key = row[0]
+                counts[key] = counts.get(key, 0) + 1
 
-        plt.figure(figsize=(8, 6))
-        plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=140)
-        plt.axis('equal')
-        plt.savefig(f'static/{filename}')
-        plt.close()
+            labels = counts.keys()
+            sizes = counts.values()
 
-    generate_chart(data, 'pie_chart3.png')
-    generate_chart(data1, 'pie_chart4.png')
-    generate_chart(data2, 'pie_chart5.png')
-    role=session['role']
+            plt.figure(figsize=(8, 6))
+            plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=140)
+            plt.axis('equal')
+            plt.savefig(f'static/{filename}')
+            plt.close()
 
-    return render_template('reasonpiechart.html',role=role)
+        generate_chart(data, 'pie_chart3.png')
+        generate_chart(data1, 'pie_chart4.png')
+        generate_chart(data2, 'pie_chart5.png')
+        role=session['role']
+
+        return render_template('reasonpiechart.html',role=role)
+    except Exception as e:
+        return render_template("error.html" ,info=str(e),role=session['role'])
 
 @app.route('/message', methods=['GET','POST'])
 @login_required
@@ -630,7 +580,7 @@ def meesagesubmit():
         return redirect('/home')
         
     except Exception as e:
-        return render_template('error.html', info=str(e)) 
+        return render_template("error.html" ,info=str(e),role=session['role'])
 
 @app.route('/datasummary')
 @login_required
@@ -651,7 +601,7 @@ def datasummary():
 
                 return render_template('datasummary.html',total=total,abroad=abroad,unemployeed=unemployeed,uneducated=uneducated,literacy=literacy,role=role)
     except Exception as e:
-        return render_template("error.html" ,info=str(e))
+        return render_template("error.html" ,info=str(e),role=session['role'])
     
 @app.route('/messageview',methods=['Get','POST'])
 @login_required
@@ -665,45 +615,48 @@ def messagedview():
         return render_template('messageview.html',items=items,role=role)
                 
     except Exception as e:
-        return render_template("error.html" ,info=str(e))
+        return render_template("error.html" ,info=str(e),role=session['role'])
     
     
     
 @app.route('/reasonbargraph', methods=['POST','GET'])
 @login_required
 def generate_reason_bar_graph():
-    criteria1=request.form.get('criteria1')
-    criteria2=request.form.get('criteria2')
-    print(criteria1,criteria2)
-    def fetch_data():
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute(f"SELECT {criteria1}, {criteria2} FROM detail")
-        data=cursor.fetchall()
-        cursor.close()
-        conn.close()
-        return data
+    try:
+        criteria1=request.form.get('criteria1')
+        criteria2=request.form.get('criteria2')
+        print(criteria1,criteria2)
+        def fetch_data():
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute(f"SELECT {criteria1}, {criteria2} FROM detail")
+            data=cursor.fetchall()
+            cursor.close()
+            conn.close()
+            return data
 
-    data = fetch_data()
-    
-    
-    def generate_chart(data, filename, x, y):
-        df = pd.DataFrame(data, columns=[x,y])
-        print(df)
+        data = fetch_data()
+        
+        
+        def generate_chart(data, filename, x, y):
+            df = pd.DataFrame(data, columns=[x,y])
+            print(df)
 
-        plt.figure(figsize=(10, 6))
-        sns.countplot(x=x,hue=y,data=df)
+            plt.figure(figsize=(10, 6))
+            sns.countplot(x=x,hue=y,data=df)
 
-        plt.xticks(rotation=45, ha='right')
-        plt.tight_layout()
-        plt.savefig(f'static/{filename}')
-        plt.close()
+            plt.xticks(rotation=45, ha='right')
+            plt.tight_layout()
+            plt.savefig(f'static/{filename}')
+            plt.close()
 
-    generate_chart(data, 'bar_chart1.png', criteria1, criteria2)
-    
-    role = session['role']
+        generate_chart(data, 'bar_chart1.png', criteria1, criteria2)
+        
+        role = session['role']
 
-    return render_template('bargraph.html', role=role,criteria1=criteria1.upper(),criteria2=criteria2.upper())
+        return render_template('bargraph.html', role=role,criteria1=criteria1.upper(),criteria2=criteria2.upper())
+    except Exception as e:
+        return render_template("error.html" ,info=str(e),role=session['role'])
 
 
 

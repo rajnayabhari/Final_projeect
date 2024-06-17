@@ -1,0 +1,115 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 1rem;
+}
+
+.logo h1 {
+    color: #fff;
+    margin: 0;
+}
+
+/* Navigation styles */
+nav .menu {
+    display: flex;
+    align-items: center;
+}
+
+nav .menu a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s ease;
+}
+
+nav .menu a:hover {
+    background-color: #575757;
+}
+
+nav .dropdown,
+nav .dropdown1 {
+    position: relative;
+    display: inline-block;
+}
+
+nav .dropdown-content,
+nav .dropdown1 .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #333;
+    min-width: 200px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+nav .dropdown-content a,
+nav .dropdown1 .dropdown-content p {
+    color: #fff;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+nav .dropdown-content a:hover,
+nav .dropdown1 .dropdown-content p:hover {
+    background-color: #575757;
+}
+
+nav .dropdown:hover .dropdown-content,
+nav .dropdown1:hover .dropdown-content {
+    display: block;
+}
+
+/* Bargraph dropdown form styles */
+.dropdown-content form {
+    padding: 1rem;
+    color: #fff;
+}
+
+.dropdown-content label {
+    color: #fff;
+}
+
+.dropdown-content select,
+.dropdown-content button {
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    width: 100%;
+}
+
+.dropdown-content button {
+    background-color: #63e6be;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-content button:hover {
+    background-color: #51c7a5;
+}
+
+/* Logout button styles */
+.logout-form .button {
+    background-color: #ff6b6b;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.logout-form .button:hover {
+    background-color: #ff4d4d;
+}

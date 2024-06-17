@@ -1,58 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Collection Form</title>
-    <link rel="stylesheet" href="static/dataform.css">
-    <link rel="stylesheet" href="static/home.css">
+{% block title %}Form{% endblock %}
 
-
-</head>
-
-<body>
-    <header id="header">
-        <div class="nav-container">
-            <div class="logo">
-                <h1>DataSys</h1>
-            </div>
-            <nav>
-                <input type="checkbox" id="menu-toggle">
-                <label for="menu-toggle" class="menu-icon"><i class="fa fa-bars"></i></label>
-                <div class="menu">
-                    <a href="/home">Home</a>
-                    {% if role == 'admin' %}
-                    <a href="/intro">Intro</a>
-                    <a href="/userlist">Users</a>
-                    <a href="/admin">Data</a>
-                    <a href="/messageview">Message</a>
-                    <div class="dropdown">
-                        <a href="#">Analysis</a>
-                        <div class="dropdown-content">
-                            <a href="/piechart"><strong>Distribution Pie Chart</strong></a>
-                            <a href="/reasonpiechart"><strong>Reason Pie Chart</strong></a>
-                            <a href="/datasummary"><strong>Data Summary</strong></a>
-                        </div>
-                    </div>
-                    {% endif %}
-
-                    {% if role == 'user' %}
-                    <a href="/data">Data</a>
-                    <div class="dropdown">
-                        <a href="#">Services</a>
-                        <div class="dropdown-content">
-                            <a href="/dataform"><strong>Data Form</strong></a>
-                        </div>
-                    </div>
-                    {% endif %}
-                    <form action="/logout" method="post" class="logout-form">
-                        <button type="submit" class="button">Logout</button>
-                    </form>
-                </div>
-            </nav>
-        </div>
-    </header>
+{% block content %}
     <div class="body-content">
         <form method="post" action="/registerdataform">
             <div class="container">
@@ -152,6 +102,4 @@
     </div>
 
     <script src="static/script.js"></script>
-</body>
-
-</html>
+{% endblock %}

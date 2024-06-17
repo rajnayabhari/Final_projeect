@@ -1,58 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Pie Chart</title>
-    <link rel="stylesheet" href="../static/home.css">
-    <script src="static/hompage.js">  </script>
-    <link rel="stylesheet" href="static/userlist.css">
+{% extends "base.html" %}
 
-</head>
-<body>
-    <header id="header">
-        <div class="nav-container">
-          <div class="logo">
-            <h1>DataSys</h1>
-          </div>
-          <nav>
-            <input type="checkbox" id="menu-toggle">
-            <label for="menu-toggle" class="menu-icon"><i class="fa fa-bars"></i></label>
-            <div class="menu">
-                <a href="/home">Home</a>
-              {% if role == 'admin' %}
-              <a href="/intro">Intro</a>
-              <a href="/userlist">Users</a>
-              <a href="/admin">Data</a>
-              <a href="/messageview">Message</a>
-              <div class="dropdown">
-                <a href="#">Analysis</a>
-                <div class="dropdown-content">
-                  <a href="/piechart"><strong>Distribution Pie Chart</strong></a>
-                  <a href="/reasonpiechart"><strong>Reason Pie Chart</strong></a>
-                  <a href="/datasummary"><strong>Data Summary</strong></a>
-                </div>
-              </div>
-              {% endif %}
+{% block title %}Form{% endblock %}
 
-              {% if role == 'user' %}
-              <a href="/data">Data</a>
-              <div class="dropdown">
-                <a href="#">Services</a>
-                <div class="dropdown-content">
-                  <a href="/dataform"><strong>Data Form</strong></a>
-                </div>
-              </div>
-              {% endif %}
-              <form action="/logout" method="post" class="logout-form">
-                <button type="submit" class="button">Logout</button>
-              </form>
-            </div>
-          </nav>
-        </div>
-      </header>
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='userlist.css') }}">
     <div class="pie" style="text-align: center;">
       <h1 >{{criteria1}} VS {{criteria2}}</h1>
         <img src="{{ url_for('static', filename='bar_chart1.png') }}" width="50%" height="50%" alt="Bar Chart">
     </div>
-</body>
-</html>
+{% endblock %}

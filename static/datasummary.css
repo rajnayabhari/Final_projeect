@@ -1,50 +1,44 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
     margin: 0;
-    padding: 20px;
+    padding: 0;
+    background-color: #f4f4f4;
 }
 
 .main-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    text-align: center;
-    /* align-items: center;
-    display: block;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    gap: 100px; */
-}
-
-.content:hover{
-    scale: 1.2;
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
 }
 
 .content {
-    background-color: rgb(120, 197, 171);
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    flex: 1 1 calc(33% - 40px);
-    box-sizing: border-box;
-    margin: 10px;
-    max-width: 30%;
-    min-width: 200px;
+    margin-bottom: 15px;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    background-color: #fafafa;
+}
+
+.content h2 {
+    font-size: 1.5em;
+    color: #333;
+    margin: 0;
+    padding: 0;
 }
 
 h2 {
-    color: #333;
-    font-size: 1.5em;
-    margin: 0;
-    padding: 10px 0;
-    text-align: center;
+    margin: 0 0 10px;
 }
 
-.content h2:before {
-    content: "\2022 ";
-    color: #007BFF;
-    font-weight: bold;
+@media (max-width: 768px) {
+    .main-content {
+        width: 95%;
+    }
+
+    .content h2 {
+        font-size: 1.2em;
+    }
 }

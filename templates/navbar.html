@@ -1,0 +1,78 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='navbar.css') }}">
+<header id="header">
+    <div class="nav-container">
+        <div class="logo">
+            <h1>DataSys</h1>
+        </div>
+        <nav>
+            <div class="menu">
+                {% if role == 'admin' %}
+                <a href="/intro">Intro</a>
+                <div class="dropdown">
+                    <a href="#">Bargraph</a>
+                    <div class="dropdown-content">
+                        <form method="POST" action="/reasonbargraph">
+                            <label>Criteria 1:</label>
+                            <select name="criteria1">
+                                <option value="education">Education</option>
+                                <option value="employeed">Employment</option>
+                                <option value="abroad">Abroad</option>
+                            </select>
+                            <br><br>
+                            <label>Criteria 2:</label>
+                            <select name="criteria2">
+                                <option value="education">Education</option>
+                                <option value="gender">Gender</option>
+                                <option value="employeed">Employment</option>
+                                <option value="abroad">Abroad</option>
+                            </select>
+                            <br><br>
+                            <button type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+                <a href="/userlist">Users</a>
+                <a href="/admin">Data</a>
+                <a href="/messageview">Message</a>
+                <div class="dropdown">
+                    <a href="#">Analysis</a>
+                    <div class="dropdown-content">
+                        <a href="/piechart"><strong>Distribution Pie Chart</strong></a>
+                        <a href="/reasonpiechart"><strong>Reason Pie Chart</strong></a>
+                        <a href="/datasummary"><strong>Data Summary</strong></a>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="dropdown1">
+                    <a href="#">Contact Us</a>
+                    <div class="dropdown-content">
+                        <p onclick="phone()">
+                            <i class="fa-solid fa-phone" style="color: #63e6be"></i>
+                            <b>9845256525</b>
+                        </p>
+                        <p onclick="mail()">
+                            <i class="fa-solid fa-envelope" style="color: #74c0fc"></i>
+                            <b>example@.com</b>
+                        </p>
+                        <p onclick="facebook()">
+                            <i class="fa-brands fa-facebook" style="color: #74c0fc"></i>
+                            <b>Facebook</b>
+                        </p>
+                    </div>
+                </div>
+                {% if role == 'user' %}
+                <a href="/data">Data</a>
+                <div class="dropdown">
+                    <a href="#">Services</a>
+                    <div class="dropdown-content">
+                        <a href="/dataform"><strong>Data Form</strong></a>
+                    </div>
+                </div>
+                {% endif %}
+                <form action="/logout" method="post" class="logout-form">
+                    <button type="submit" class="button">Logout</button>
+                </form>
+            </div>
+        </nav>
+    </div>
+</header>

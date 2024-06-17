@@ -1,58 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update User Role</title>
-    <link rel="stylesheet" href="../static/home.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='updaterole.css') }}">
-    <link rel="stylesheet" href="../static/userlist.css"/>
-    <script src="static/hompage.js">  </script>
+{% extends "base.html" %}
 
+{% block title %}Form{% endblock %}
 
-</head>
-<body>
-    <header id="header">
-        <div class="nav-container">
-          <div class="logo">
-            <h1>DataSys</h1>
-          </div>
-          <nav>
-            <input type="checkbox" id="menu-toggle">
-            <label for="menu-toggle" class="menu-icon"><i class="fa fa-bars"></i></label>
-            <div class="menu">
-                <a href="/home">Home</a>
-              {% if role == 'admin' %}
-              <a href="/intro">Intro</a>
-              <a href="/userlist">Users</a>
-              <a href="/admin">Data</a>
-              <a href="/messageview">Message</a>
-              <div class="dropdown">
-                <a href="#">Analysis</a>
-                <div class="dropdown-content">
-                  <a href="/piechart"><strong>Distribution Pie Chart</strong></a>
-                  <a href="/reasonpiechart"><strong>Reason Pie Chart</strong></a>
-                  <a href="/datasummary"><strong>Data Summary</strong></a>
-                </div>
-              </div>
-              {% endif %}
+{% block content %}
 
-              {% if role == 'user' %}
-              <a href="/data">Data</a>
-              <div class="dropdown">
-                <a href="#">Services</a>
-                <div class="dropdown-content">
-                  <a href="/dataform"><strong>Data Form</strong></a>
-                </div>
-              </div>
-              {% endif %}
-              <form action="/logout" method="post" class="logout-form">
-                <button type="submit" class="button">Logout</button>
-              </form>
-            </div>
-          </nav>
-        </div>
-      </header>
+<link rel="stylesheet" href="{{ url_for('static', filename='updaterole.css') }}">
     <br><br>
     <h1 style="text-align: center;"><a href="/home">Home</a></h1>
     <h1>Update Role for {{ email }}</h1>
@@ -64,5 +16,4 @@
         </Select>
         <button type="submit">Update</button>
     </form>
-</body>
-</html>
+{% endblock %}
