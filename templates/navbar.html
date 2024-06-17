@@ -1,13 +1,13 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='navbar.css') }}">
 <header id="header">
-    <div class="nav-container">
+    <div class="nav-container1">
         <div class="logo">
             <h1>DataSys</h1>
         </div>
         <nav>
             <div class="menu">
+                <a href="/home">Home</a>
                 {% if role == 'admin' %}
-                <a href="/intro">Intro</a>
                 <div class="dropdown">
                     <a href="#">Bargraph</a>
                     <div class="dropdown-content">
@@ -62,16 +62,14 @@
                 </div>
                 {% if role == 'user' %}
                 <a href="/data">Data</a>
-                <div class="dropdown">
-                    <a href="#">Services</a>
-                    <div class="dropdown-content">
-                        <a href="/dataform"><strong>Data Form</strong></a>
-                    </div>
+                <div class="container">
+                    <a href="/dataform" class="add-button">
+                        <h2><img src="{{ url_for('static', filename='add.png') }}" alt="Add"height="50px" width="50px"></h2>        
+                    </a>
                 </div>
                 {% endif %}
-                <form action="/logout" method="post" class="logout-form">
-                    <button type="submit" class="button">Logout</button>
-                </form>
+                <a href="/logout" class="add-button"><h2 style="text-align: right;"><img src="{{ url_for('static', filename='logout.png') }}" alt="Logout"height="50px" width="50px">
+                </h2></a>
             </div>
         </nav>
     </div>

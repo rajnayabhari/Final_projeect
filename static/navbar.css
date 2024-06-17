@@ -1,12 +1,12 @@
 /* General styles */
-body {
+body{
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
 }
 
-.nav-container {
+.nav-container1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -113,3 +113,48 @@ nav .dropdown1:hover .dropdown-content {
 .logout-form .button:hover {
     background-color: #ff4d4d;
 }
+
+nav a[href="/logout"] {
+    background-color: #333;
+    padding: 0;
+}
+
+nav a[href="/logout"] h2 {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+nav a[href="/logout"] h2 img {
+    margin-left: 10px;
+}
+
+a.add-button {
+    display: inline-block;
+    text-align: right;
+    margin-right: 20px; /* Adjust this value to control the right margin */
+    text-decoration: none;
+  }
+  
+  a.add-button h2 {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 0;
+    padding: 0;
+  }
+  
+  a.add-button img {
+    display: block;
+    height: 50px;
+    width: 50px;
+    border: none; /* Remove border if any */
+    padding: 5px; /* Adjust padding around the image */
+    transition: transform 0.3s ease; /* For smooth scaling effect */
+  }
+  
+  a.add-button img:hover {
+    transform: scale(1.1); /* Scale image on hover for effect */
+  }

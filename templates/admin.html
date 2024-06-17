@@ -30,12 +30,12 @@
                 <tbody>
                     {% for item in items %}
                         <tr>
-                            <td>{{ item[1] }}</td>
-                            <td>{{ item[2] }}</td>
-                            <td>{{ item[3] }}</td>
-                            <td>{{ item[4] }}</td>
-                            <td>{{ item[5] }}</td>
-                            <td>{{ item[6] }}</td>
+                            <td>{{ item[1].capitalize()  }}</td>
+                            <td>{{ item[2].capitalize()  }}</td>
+                            <td>{{ item[3].capitalize()  }}</td>
+                            <td>{{ item[4].capitalize()  }}</td>
+                            <td>{{ item[5].capitalize()  }}</td>
+                            <td>{{ item[6].capitalize()  }}</td>
                             <td>
                                 <a href="{{ url_for('update', item_id=item[0]) }}" class="action-button update">Update</a>
                                 {% if role == 'admin' %}

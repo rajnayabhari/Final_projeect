@@ -3,6 +3,8 @@
 {% block title %}Form{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dataform.css') }}">
+
     <div class="body-content">
         <form method="post" action="/registerdataform">
             <div class="container">
@@ -16,7 +18,7 @@
                 </div>
 
                 <label for="formdate">Form Date:</label>
-                <input type="date" name="formdate" required><br><br>
+                {{date}}<br><br>
 
                 <label for="name">Full Name:</label>
                 <input type="text" id="name" name="name" placeholder="Enter full name" required><br><br>

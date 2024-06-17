@@ -9,6 +9,12 @@ from functools import wraps
 from flask import Flask, request, render_template, redirect, session,url_for,abort
 from database import get_db_connection,database
 
+from datetime import datetime
+
+# Get the current date and time
+now = datetime.now()
+date=now.strftime("%Y-%m-%d")
+
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
@@ -74,10 +80,10 @@ def register():
         hashed_password = hash_password(password)
         with get_db_connection() as conn:
             with conn.cursor() as cursor:
-                cursor.execute("SELECT * FROM LOGIN WHERE EMAIL = %s", (email,))
+                cursor.execute("SELECT * FROM login1 WHERE EMAIL = %s", (email,))
                 if cursor.fetchone():
                     raise ValueError("Email already registered")
-                cursor.execute("INSERT INTO LOGIN(USERNAME, EMAIL, PASSWORD,Role) VALUES (%s, %s, %s,%s)", (username, email, hashed_password,'user'))
+                cursor.execute("INSERT INTO login1(USERNAME, EMAIL, PASSWORD,Role) VALUES (%s, %s, %s,%s)", (username, email, hashed_password,'user'))
                 conn.commit()
         return render_template('signin.html')
         
@@ -92,7 +98,7 @@ def login():
     try:
         with get_db_connection() as conn:
             with conn.cursor() as cursor:
-                cursor.execute("SELECT * FROM LOGIN WHERE EMAIL = %s", (email,))
+                cursor.execute("SELECT * FROM login1 WHERE EMAIL = %s", (email,))
                 user = cursor.fetchone()
                 if user and verify_password(user[3], password):
                     session['user_id'] = user[0]
@@ -109,7 +115,7 @@ def generate_certificate_number(prefix="DRF-"):
     try:
         with get_db_connection() as conn:
             with conn.cursor() as cursor:
-                cursor.execute("SELECT MAX(Certificate_no) FROM detail")
+                cursor.execute("SELECT MAX(Certificate_no) FROM detail1")
                 max_certificate_number = cursor.fetchone()[0]
                 if max_certificate_number is None:
                     return prefix + "1"
@@ -138,7 +144,7 @@ def search():
                 # Corrected SQL query with matching parameter count
                 cursor.execute("""
                     SELECT id_no, fullname, gender, issueddate, employeed, education, abroad
-                    FROM Detail
+                    FROM detail1
                     WHERE lower(fullname) LIKE %s
                        OR lower(education) LIKE %s
                        OR lower(abroad) LIKE %s
@@ -151,7 +157,7 @@ def search():
                 # Corrected count query to match the search criteria
                 cursor.execute("""
                     SELECT COUNT(*)
-                    FROM Detail
+                    FROM detail1
                     WHERE lower(fullname) LIKE %s
                        OR lower(education) LIKE %s
                        OR lower(abroad) LIKE %s
@@ -198,7 +204,7 @@ def home():
 @login_required
 def dataform():
     role=session['role']
-    return render_template("dataform.html" ,role=role)
+    return render_template("dataform.html" ,role=role,date=date)
 
 @app.route("/registerdataform" , methods=['POST'])
 @login_required
@@ -213,7 +219,6 @@ def registerdataform():
         education=request.form.get('education')
         employeed=request.form.get('employed')
         abroad=request.form.get('abroad')
-        issueddate=request.form.get('formdate')
         userid=session['user_id']
         if employeed=='Unemployed':
             reason_for_unemployment=request.form.get('reason_for_unemployment')
@@ -231,12 +236,12 @@ def registerdataform():
         # Generate a unique certificate number
         certificate_no = generate_certificate_number()
 
-        # Insert data into the Detail table along with the generated certificate number
+        # Insert data into the detail1 table along with the generated certificate number
         try:
             with get_db_connection() as conn:
                 with conn.cursor() as cursor:
                     cursor.execute("""
-                        INSERT INTO Detail(
+                        INSERT INTO detail1(
                             Certificate_no,
                             fullname, 
                             fathername, 
@@ -255,7 +260,7 @@ def registerdataform():
                         )
                         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s,%s,%s,%s)""", 
                         (certificate_no,name, fathername, mothername, grandfathername, dob, gender, education, employeed,abroad,
-                        issueddate,reason_for_unemployment,reason_for_uneducated,reason_for_abroad ,userid
+                        date,reason_for_unemployment,reason_for_uneducated,reason_for_abroad ,userid
                         ))
                     conn.commit()
                     return redirect('/dataform')
@@ -274,7 +279,7 @@ def userlist():
     try:
         with get_db_connection() as conn:
             with conn.cursor() as cursor:
-                cursor.execute("SELECT username, email,role FROM login")
+                cursor.execute("SELECT username, email,role FROM login1")
                 items=cursor.fetchall()
                 role=session['role']
                 
@@ -290,9 +295,9 @@ def admin():
         try:
             with get_db_connection() as conn:
                 with conn.cursor() as cursor:
-                    cursor.execute("SELECT id_no,fullname,gender,issueddate,employeed,education,abroad  FROM detail order by id_no desc")
+                    cursor.execute("SELECT id_no,fullname,gender,issueddate,employeed,education,abroad  FROM detail1 order by id_no desc")
                     items=cursor.fetchall()
-                    cursor.execute("SELECT COUNT(id_no) from detail")
+                    cursor.execute("SELECT COUNT(id_no) from detail1")
                     total=cursor.fetchone()[0]
                     role=session['role']
             return render_template('admin.html', items=items,total=total,role=role)
@@ -313,7 +318,7 @@ def updateuserrole(item_id):
         new_role = request.form['role']
         with get_db_connection() as conn:
             with conn.cursor() as cursor:
-                cursor.execute("UPDATE LOGIN SET role = %s WHERE email = %s", (new_role, item_id))
+                cursor.execute("UPDATE login1 SET role = %s WHERE email = %s", (new_role, item_id))
                 conn.commit()
         return redirect(url_for('userlist'))
     role=session['role']
@@ -328,7 +333,7 @@ def deleteuser(item_id):
     try:
         with get_db_connection() as conn:
             with conn.cursor() as cursor:
-                cursor.execute("DELETE FROM LOGIN WHERE email = %s", (item_id,))
+                cursor.execute("DELETE FROM login1 WHERE email = %s", (item_id,))
                 conn.commit()
     
     except Exception as e:
@@ -345,7 +350,7 @@ def view_collector():
                 cursor.execute(
                     """
                     SELECT id_no, fullname, gender, issueddate, employeed, education, abroad
-                    FROM detail
+                    FROM detail1
                     WHERE user_id = %s
                     ORDER BY id_no DESC
                     """,
@@ -353,7 +358,7 @@ def view_collector():
                 )                
                 items=cursor.fetchall()
                 role=session['role']
-                cursor.execute("SELECT COUNT(id_no) from detail")
+                cursor.execute("SELECT COUNT(id_no) from detail1")
                 total=cursor.fetchone()[0]
                 if items==[]:
                     return render_template('error.html',info="please fill the form first")
@@ -371,9 +376,9 @@ def view_collector():
 #         try:
 #             with get_db_connection() as conn:
 #                 with conn.cursor() as cursor:
-#                     cursor.execute("SELECT id_no,fullname,gender,issueddate,employeed,education,abroad  FROM detail ORDER BY id_no DESC")
+#                     cursor.execute("SELECT id_no,fullname,gender,issueddate,employeed,education,abroad  FROM detail1 ORDER BY id_no DESC")
 #                     items = cursor.fetchall()
-#                     cursor.execute("SELECT COUNT(id_no) FROM detail")
+#                     cursor.execute("SELECT COUNT(id_no) FROM detail1")
 #                     total = cursor.fetchone()[0]
 #             return render_template('user_data_view.html', items=items, total=total)
 #         except Exception as e:
@@ -401,7 +406,6 @@ def update(item_id):
                     education=request.form.get('education')
                     employeed=request.form.get('employed')
                     abroad=request.form.get('abroad')
-                    issueddate=request.form.get('formdate')
                     if employeed=='Unemployed':
                         reason_for_unemployment=request.form.get('reason_for_unemployment')
                     else:
@@ -416,17 +420,17 @@ def update(item_id):
                         reason_for_abroad=0
                     # Construct and execute the SQL update query
                     cursor.execute("""
-                        UPDATE Detail
+                        UPDATE detail1
                         SET fullname = %s, mothername = %s, fathername = %s, 
                             grandfathername = %s, dob = %s, gender = %s, 
-                            issueddate = %s, education = %s, employeed = %s, 
+                            education = %s, employeed = %s, 
                             abroad = %s,reason_for_unemployment=%s ,
                             reason_for_uneducated=%s ,
                             reason_for_abroad=%s
                             WHERE Id_no = %s
                             """, (fullname, mothername, fathername, 
-                            grandfathername, dob, gender, 
-                            issueddate, education, employeed, abroad, reason_for_unemployment, reason_for_uneducated, reason_for_abroad ,item_id))
+                            grandfathername, dob, gender 
+                            , education, employeed, abroad, reason_for_unemployment, reason_for_uneducated, reason_for_abroad ,item_id))
                     conn.commit()
             # Redirect based on role
             if session['role'] == 'admin':
@@ -442,13 +446,13 @@ def update(item_id):
         try:
             with get_db_connection() as conn:
                 with conn.cursor() as cursor:
-                    # Fetch item details from database
-                    cursor.execute("SELECT * FROM Detail WHERE Id_no = %s", (item_id,))
+                    # Fetch item detail1s from database
+                    cursor.execute("SELECT * FROM detail1 WHERE Id_no = %s", (item_id,))
                     item = cursor.fetchone()
                     print(item)
             if item:
                 role=session['role']
-                # Render update template with item details
+                # Render update template with item detail1s
                 return render_template('update.html',role=role, item=item)
             else:
                 # Render error template if item not found
@@ -465,7 +469,7 @@ def delete(item_id):
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute('DELETE FROM detail WHERE id_no = %s', (item_id,))
+            cursor.execute('DELETE FROM detail1 WHERE id_no = %s', (item_id,))
             conn.commit()
             conn.close()
             return redirect(url_for('admin'))
@@ -479,11 +483,11 @@ def generate_pie_chart():
         def fetch_data():
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("SELECT education FROM detail")
+            cursor.execute("SELECT education FROM detail1")
             data = cursor.fetchall()
-            cursor.execute("SELECT employeed FROM detail")
+            cursor.execute("SELECT employeed FROM detail1")
             data1 = cursor.fetchall()
-            cursor.execute("SELECT abroad FROM detail")
+            cursor.execute("SELECT abroad FROM detail1")
             data2 = cursor.fetchall()
             cursor.close()
             conn.close()
@@ -521,11 +525,11 @@ def generate_reason_pie_chart():
         def fetch_data():
                 conn = get_db_connection()
                 cursor = conn.cursor()
-                cursor.execute("SELECT reason_for_uneducated FROM detail where reason_for_uneducated <> '0' ")
+                cursor.execute("SELECT reason_for_uneducated FROM detail1 where reason_for_uneducated <> '0' ")
                 data = cursor.fetchall()
-                cursor.execute("SELECT reason_for_unemployment from detail where reason_for_unemployment <> '0'")
+                cursor.execute("SELECT reason_for_unemployment from detail1 where reason_for_unemployment <> '0'")
                 data1 = cursor.fetchall()
-                cursor.execute("SELECT reason_for_abroad from detail where reason_for_abroad <> '0'")
+                cursor.execute("SELECT reason_for_abroad from detail1 where reason_for_abroad <> '0'")
                 data2 = cursor.fetchall()
                 cursor.close()
                 conn.close()
@@ -589,13 +593,13 @@ def datasummary():
         role=session['role']
         with get_db_connection() as conn:
             with conn.cursor() as cursor:
-                cursor.execute("SELECT count(*) FROM detail WHERE abroad='Yes'")
+                cursor.execute("SELECT count(*) FROM detail1 WHERE abroad='Yes'")
                 abroad = cursor.fetchone()[0]
-                cursor.execute("SELECT count(id_no) FROM detail")
+                cursor.execute("SELECT count(id_no) FROM detail1")
                 total=cursor.fetchone()[0]
-                cursor.execute("SELECT count(*) FROM detail WHERE employeed='Unemployed'")
+                cursor.execute("SELECT count(*) FROM detail1 WHERE employeed='Unemployed'")
                 unemployeed = cursor.fetchone()[0]
-                cursor.execute("SELECT count(*) FROM detail WHERE education='Illiterate'")
+                cursor.execute("SELECT count(*) FROM detail1 WHERE education='Illiterate'")
                 uneducated = cursor.fetchone()[0]
                 literacy=100-((uneducated/total)*100)
 
@@ -629,7 +633,7 @@ def generate_reason_bar_graph():
         def fetch_data():
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute(f"SELECT {criteria1}, {criteria2} FROM detail")
+            cursor.execute(f"SELECT {criteria1}, {criteria2} FROM detail1")
             data=cursor.fetchall()
             cursor.close()
             conn.close()
@@ -666,11 +670,11 @@ def intro():
     role=session['role']
     return render_template('intro.html',role=role)
 
-@app.route("/logout",methods=['POST'])
+@app.route("/logout")
 @login_required
 def logout():
     session.clear()
     return redirect("/")
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0',debug=True, port=5000)
+if __name__ == '__main__':
+   app.run(debug=False)

@@ -6,11 +6,20 @@ def hash_password(password):
 
 def get_db_connection():
     return psycopg2.connect(
-        database="credential",
-        user="postgres",
-        password="@hybesty123",
-        host="127.0.0.1",
-        port=5432
+   #for local
+        # database="cms",
+        # user="postgres",
+        # password="@hybesty123",
+        # host="127.0.0.1",
+        # port=5432
+        
+        #for render.com
+        
+        database="cms_7j5a",
+        user="cms_7j5a_user",
+        password="MAFQ8hwWXNIo3JQIC3Zc2gqW8fPGdKhX",
+        host="dpg-cpo6qpo8fa8c739n2ie0-a",
+        port="5432"
     )
 def database():
     email='raj@gmail.com'       
@@ -20,7 +29,7 @@ def database():
     with get_db_connection() as conn:
         with conn.cursor() as cursor:
             cursor.execute("""
-            CREATE TABLE IF NOT EXISTS LOGIN(
+            CREATE TABLE IF NOT EXISTS LOGIN1(
             USER_ID SERIAL PRIMARY KEY NOT NULL,
             USERNAME VARCHAR(250) NOT NULL,
             EMAIL VARCHAR(250) NOT NULL UNIQUE,
@@ -34,7 +43,7 @@ def database():
             );
             """, (username, hashed_password, email, 'admin', email)); 
             cursor.execute("""
-            CREATE TABLE IF NOT EXISTS Detail (
+            CREATE TABLE IF NOT EXISTS Detail1 (
             Id_no SERIAL PRIMARY KEY NOT NULL,
             Certificate_no VARCHAR(250) NOT NULL,
             fullname VARCHAR(250) NOT NULL,

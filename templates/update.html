@@ -6,7 +6,6 @@
 
 <link rel="stylesheet" href="{{ url_for('static', filename='dataform.css') }}">
     <br><br>
-    <h1>Update Details</h1>
     <div class="body-content">
         <form method="POST">
             <div class="container">
@@ -15,11 +14,11 @@
                         <img src="../static/LOGO.png" alt="logo" height="150px" width="auto"/>
                     </div>
                     <div class="head">
-                        <h1>Data Collection Form</h1>
+                        <h1>Detail Update Form</h1>
                     </div>
                 </div>
                 <label for="formdate">Form Date:</label>
-                <input type="date" name="formdate" value="{{ item[8] }}" required><br><br>
+                {{ item[8] }}<br><br>
                 <label for="name">Full Name:</label>
                 <input type="text" id="name" name="name" placeholder="Enter full name" value="{{ item[2] }}" required><br><br>
                 <label for="fathername">Father's Name:</label>
@@ -90,4 +89,6 @@
             </div>
         </form>
     </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
 {% endblock %}
