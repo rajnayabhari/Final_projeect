@@ -19,14 +19,14 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
 # Database Connection
-def get_db_connection():
-    return psycopg2.connect(
-        database="credential",
-        user="postgres",
-        password="@hybesty123",
-        host="127.0.0.1",
-        port=5432
-    )
+# def get_db_connection():
+#     return psycopg2.connect(
+#         database="credential",
+#         user="postgres",
+#         password="@hybesty123",
+#         host="127.0.0.1",
+#         port=5432
+#     )
 
 # Regular expressions
 regex_email = re.compile(r'^[a-zA-Z0-9._%+-]+@gmail\.com$')
