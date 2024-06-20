@@ -230,7 +230,10 @@ def home():
                         "SELECT count(*) FROM detail WHERE education='Illiterate'"
                     )
                     uneducated = cursor.fetchone()[0]
-                    literacy = 100 - ((uneducated / total) * 100)
+                    if total == 0:
+                        literacy = 0  # or any appropriate default value or error handling mechanism
+                    else:
+                        literacy = 100 - ((uneducated / total) * 100)
                     name = session["username"]
             return render_template("homepage.html", role=role, name=name.capitalize(),total=total,
                     abroad=abroad,
