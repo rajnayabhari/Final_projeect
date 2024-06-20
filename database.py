@@ -6,12 +6,12 @@ def hash_password(password):
 
 def get_db_connection():
     return psycopg2.connect(
-   #for local
-        # database="cms",
-        # user="postgres",
-        # password="@hybesty123",
-        # host="127.0.0.1",
-        # port=5432
+    #for local
+#         database="digi_muni",
+#         user="postgres",
+#         password="@hybesty123",
+#         host="127.0.0.1",
+#         port=5432
         
         #for render.com
         
@@ -29,21 +29,21 @@ def database():
     with get_db_connection() as conn:
         with conn.cursor() as cursor:
             cursor.execute("""
-            CREATE TABLE IF NOT EXISTS LOGIN1(
+            CREATE TABLE IF NOT EXISTS login(
             USER_ID SERIAL PRIMARY KEY NOT NULL,
             USERNAME VARCHAR(250) NOT NULL,
             EMAIL VARCHAR(250) NOT NULL UNIQUE,
             PASSWORD VARCHAR(250) NOT NULL,
             ROLE VARCHAR(250) NOT NULL
             );
-            INSERT INTO LOGIN1 (username, password, email, role)
+            INSERT INTO login (username, password, email, role)
             SELECT %s, %s, %s, %s
             WHERE NOT EXISTS (
-                SELECT 1 FROM login1 WHERE email = %s
+                SELECT 1 FROM login WHERE email = %s
             );
             """, (username, hashed_password, email, 'admin', email)); 
             cursor.execute("""
-            CREATE TABLE IF NOT EXISTS Detail1 (
+            CREATE TABLE IF NOT EXISTS detail (
             Id_no SERIAL PRIMARY KEY NOT NULL,
             Certificate_no VARCHAR(250) NOT NULL,
             fullname VARCHAR(250) NOT NULL,
@@ -60,7 +60,7 @@ def database():
             reason_for_uneducated VARCHAR(250) DEFAULT '0',
             reason_for_abroad VARCHAR(250) DEFAULT '0',
             USER_ID INT NOT NULL,
-            FOREIGN KEY (USER_ID) REFERENCES login1 (USER_ID)
+            FOREIGN KEY (USER_ID) REFERENCES login (USER_ID)
             );
             """)
             
@@ -70,7 +70,7 @@ def database():
             message varchar(250) not null,
             username varchar(250)not null,   
             USER_ID INT NOT NULL,
-            FOREIGN KEY (USER_ID) REFERENCES login1 (USER_ID)
+            FOREIGN KEY (USER_ID) REFERENCES login (USER_ID)
                 );
             """)
             
