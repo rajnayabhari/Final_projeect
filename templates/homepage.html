@@ -8,10 +8,34 @@
 
 <body class="mainhome">
   <div id="main">
-    
+
     <div id="welcomeBox" class="content-box welcome-box">
       <h2>Welcome, {{name}}!</h2>
-      <p>You can register and view data.</p>
+      <div class="main-content">
+        <div class="content">
+          <h1>Literacy rate: {{literacy}}%</h1>
+        </div>
+        <a href="/data">
+          <div class="content">
+            <h2>Total no of people: {{total}}</h2>
+          </div>
+        </a>
+        <a href="/piechart?chart=abroad">
+          <div class="content">
+            <h2>No of people in abroad: {{abroad}}</h2>
+          </div>
+        </a>
+        <a href="/piechart?chart=education">
+          <div class="content">
+            <h2>No of people uneducated: {{uneducated}}</h2>
+          </div>
+        </a>
+        <a href="/piechart?chart=employment">
+          <div class="content">
+            <h2>No of people unemployeed: {{unemployeed}}</h2>
+          </div>
+        </a>
+      </div>
     </div>
 
     <div id="aboutBox" class="content-box">
@@ -30,29 +54,29 @@
     <div id="keyFeaturesBox" class="feature-content-box">
       <h2>Our Key Features</h2>
       <div class="features">
-      <div class="campus-col">
-        <h3>Data Collection</h3>
-        <img src="static/datacoll.jpg" alt="datacoll">
-        <div class="layer">
-          <h3>Data collection is very important </h3>
+        <div class="campus-col">
+          <h3>Data Collection</h3>
+          <img src="static/datacoll.jpg" alt="datacoll">
+          <div class="layer">
+            <h3>Data collection is very important </h3>
+          </div>
         </div>
-      </div >
 
-      <div class="campus-col">
-        <h3>Data Analysis</h3>
-        <img src="static/dataana.jpeg" alt="data analysis">
-        <div class="layer">
-          <h3> Data analysis is very important</h3>
+        <div class="campus-col">
+          <h3>Data Analysis</h3>
+          <img src="static/dataana.jpeg" alt="data analysis">
+          <div class="layer">
+            <h3> Data analysis is very important</h3>
+          </div>
+        </div>
+        <div class="campus-col">
+          <h3>Data Summary</h3>
+          <img src="static/datasum.jpg" alt="data summary">
+          <div class="layer">
+            <h3>Data summary is very important </h3>
+          </div>
         </div>
       </div>
-      <div class="campus-col">
-        <h3>Data Summary</h3>
-        <img src="static/datasum.jpg" alt="data summary">
-        <div class="layer">
-          <h3>Data summary is very important </h3>
-        </div>
-      </div>
-    </div>
     </div>
 
     {% if role == 'user' %}
@@ -64,4 +88,4 @@
     </div>
     {% endif %}
   </div>
-{% endblock %}
+  {% endblock %}

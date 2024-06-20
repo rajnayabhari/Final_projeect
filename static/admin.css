@@ -91,7 +91,7 @@ main {
 #searchForm button {
   padding: 10px;
   border: none;
-  background-color: #4eb634;
+  background-color:#2e4858;
   color: #ffffff;
   border-radius: 0 5px 5px 0;
   cursor: pointer;
@@ -99,7 +99,7 @@ main {
 }
 
 #searchForm button:hover {
-  background-color: #3ca123;
+  background-color: #0b588b;
 }
 
 h1 {
@@ -157,7 +157,12 @@ tbody tr:nth-child(even) {
 .delete:hover {
   background-color: #b02828;
 }
-
+h2{
+  text-align: center;
+  color: #333;
+  font-family: 'Times New Roman', Times, serif;
+  font-size:30px;
+}
 footer {
   background-color: #35424a;
   color: #ffffff;

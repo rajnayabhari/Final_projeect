@@ -3,20 +3,38 @@
 {% block title %}Form{% endblock %}
 
 {% block content %}
-
 <link rel="stylesheet" href="{{ url_for('static', filename='userlist.css') }}">
-    <div class="pie" style="text-align: center;">
-      <h1 >Education Distribution</h1>
-        <img src="{{ url_for('static', filename='pie_chart.png') }}" width="50%" height="50%" alt="Pie Chart">
-    </div>
-    <div class="pie" style="text-align: center;" >
-      <h1>Employement Distribution</h1>
 
-      <img src="{{ url_for('static', filename='pie_chart1.png') }}" width="50%" height="50%" alt="Pie Chart">
-  </div>
-  <div class="pie" style="text-align: center;">
+{% if chart_type == 'education' %}
+<div class="pie" style="text-align: center;">
+    <h1>Education Distribution</h1>
+    <img src="{{ url_for('static', filename='pie_chart.png') }}" width="50%" height="50%" alt="Pie Chart">
+</div>
+{% elif chart_type == 'employment' %}
+<div class="pie" style="text-align: center;">
+    <h1>Employment Distribution</h1>
+    <img src="{{ url_for('static', filename='pie_chart1.png') }}" width="50%" height="50%" alt="Pie Chart">
+</div>
+{% elif chart_type == 'abroad' %}
+<div class="pie" style="text-align: center;">
     <h1>Abroad Distribution</h1>
-
     <img src="{{ url_for('static', filename='pie_chart2.png') }}" width="50%" height="50%" alt="Pie Chart">
 </div>
+{% elif chart_type == 'all' %}
+<div class="pie" style="text-align: center;">
+    <h1>Education Distribution</h1>
+    <img src="{{ url_for('static', filename='pie_chart.png') }}" width="50%" height="50%" alt="Pie Chart">
+</div>
+<div class="pie" style="text-align: center;">
+    <h1>Employment Distribution</h1>
+    <img src="{{ url_for('static', filename='pie_chart1.png') }}" width="50%" height="50%" alt="Pie Chart">
+</div>
+<div class="pie" style="text-align: center;">
+    <h1>Abroad Distribution</h1>
+    <img src="{{ url_for('static', filename='pie_chart2.png') }}" width="50%" height="50%" alt="Pie Chart">
+</div>
+{% else %}
+<p>Please specify a chart to render (education, employment, abroad, or all).</p>
+{% endif %}
+
 {% endblock %}

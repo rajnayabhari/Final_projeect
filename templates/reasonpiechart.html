@@ -5,18 +5,18 @@
 {% block content %}
 
 <link rel="stylesheet" href="{{ url_for('static', filename='userlist.css') }}">
-    <div class="pie" style="text-align: center;">
-      <h1 >Reason for Illiteracy</h1>
-        <img src="{{ url_for('static', filename='pie_chart3.png') }}" width="50%" height="50%" alt="Pie Chart">
-    </div>
-    <div class="pie" style="text-align: center;" >
-      <h1> Reason For Unemployement</h1>
+<div class="pie" style="text-align: center;">
+  <h1>Reason for Illiteracy</h1>
+  <img src="{{ url_for('static', filename='pie_chart3.png') }}" width="50%" height="50%" alt="Pie Chart">
+</div>
+<div class="pie" style="text-align: center;">
+  <h1> Reason For Unemployement</h1>
 
-      <img src="{{ url_for('static', filename='pie_chart4.png') }}" width="50%" height="50%" alt="Pie Chart">
-  </div>
-  <div class="pie" style="text-align: center;">
-    <h1> Reason For Going Abroad </h1>
+  <img src="{{ url_for('static', filename='pie_chart4.png') }}" width="50%" height="50%" alt="Pie Chart">
+</div>
+<div class="pie" style="text-align: center;">
+  <h1> Reason For Going Abroad </h1>
 
-    <img src="{{ url_for('static', filename='pie_chart5.png') }}" width="50%" height="50%" alt="Pie Chart">
+  <img src="{{ url_for('static', filename='pie_chart5.png') }}" width="50%" height="50%" alt="Pie Chart">
 </div>
 {% endblock %}

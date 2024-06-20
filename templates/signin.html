@@ -11,7 +11,7 @@
 <body>
     <div class="logo">
         <img src="static/LOGO.png" alt="logo" height="300px" width="auto">
-    </div> 
+    </div>
     <div class="main">
         <div class="header">
             <div class="head toggle-border" id="log" onclick="toggleContent('content1')">Login</div>
@@ -22,21 +22,23 @@
                 <input type="text" name="email" id="email" placeholder="Gmail" />
                 <input type="password" name="password" id="password" placeholder="Password" />
                 <button type="submit" class="Btn">Login</button>
-                <p style="color: red;" >{{info}}</p>
+                <p style="color: red;">{{info}}</p>
             </form>
         </div>
         <div class="register_fillup" id="content2" style="display:none;">
             <form method="post" action="/signup" id="signup">
-                <input type="text" name="email" id="email" placeholder="Gmail" required/>
-                <input type="text" name="username" id="username" placeholder="Username" required/>
-                <input type="password" name="password" id="password" placeholder="Password" required/>
-                <input type="password" id="conpassword" placeholder="Confirm Password" name="confirm_password"required/>
+                <input type="text" name="email" id="email" placeholder="Gmail" required />
+                <input type="text" name="username" id="username" placeholder="Username" required />
+                <input type="password" name="password" id="password" placeholder="Password" required />
+                <input type="password" id="conpassword" placeholder="Confirm Password" name="confirm_password"
+                    required />
                 </select><br /><br>
-                <button type="submit" class="Btn" >Register</button>
+                <button type="submit" class="Btn">Register</button>
             </form>
         </div>
     </div>
 </body>
 
 <script src="static/signin.js"></script>
+
 </html>

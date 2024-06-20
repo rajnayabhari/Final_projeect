@@ -5,15 +5,15 @@
 {% block content %}
 
 <link rel="stylesheet" href="{{ url_for('static', filename='updaterole.css') }}">
-    <br><br>
-    <h1 style="text-align: center;"><a href="/home">Home</a></h1>
-    <h1>Update Role for {{ email }}</h1>
-    <form action="{{ url_for('updateuserrole', item_id=email) }}" method="post">
-        <label for="role">Role:</label>
-        <Select id="role" name="role">
-            <option value="admin">Admin</option>
-            <option value="user">User</option>
-        </Select>
-        <button type="submit">Update</button>
-    </form>
+<br><br>
+<h1 style="text-align: center;"><a href="/home">Home</a></h1>
+<h1>Update Role for {{ email }}</h1>
+<form action="{{ url_for('updateuserrole', item_id=email) }}" method="post">
+    <label for="role">Role:</label>
+    <Select id="role" name="role">
+        <option value="admin">Admin</option>
+        <option value="user">User</option>
+    </Select>
+    <button type="submit">Update</button>
+</form>
 {% endblock %}

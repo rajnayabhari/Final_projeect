@@ -6,11 +6,11 @@
 
 <link rel="stylesheet" href="{{ url_for('static', filename='dataform.css') }}">
 
-    <form action="/messagesubmit" method="post">
-        <label>Subject</label>
-        <input type="text" name="subject" id="subject">
-        <label>Message</label>
-        <textarea id="message" name="message" rows="4" cols="50" placeholder="Enter your message here..."></textarea>
-        <input type="submit" value="Submit">
-    </form>
+<form action="/messagesubmit" method="post">
+    <label>Subject</label>
+    <input type="text" name="subject" id="subject">
+    <label>Message</label>
+    <textarea id="message" name="message" rows="4" cols="50" placeholder="Enter your message here..."></textarea>
+    <input type="submit" value="Submit">
+</form>
 {% endblock %}

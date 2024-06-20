@@ -64,12 +64,16 @@
                 <a href="/data">Data</a>
                 <div class="container">
                     <a href="/dataform" class="add-button">
-                        <h2><img src="{{ url_for('static', filename='add.png') }}" alt="Add"height="50px" width="50px"></h2>        
+                        <h2><img src="{{ url_for('static', filename='add.png') }}" alt="Add" height="50px" width="50px">
+                        </h2>
                     </a>
                 </div>
                 {% endif %}
-                <a href="/logout" class="add-button"><h2 style="text-align: right;"><img src="{{ url_for('static', filename='logout.png') }}" alt="Logout"height="50px" width="50px">
-                </h2></a>
+                <a href="/logout" class="add-button">
+                    <h2 style="text-align: right;"><img src="{{ url_for('static', filename='logout.png') }}"
+                            alt="Logout" height="50px" width="50px">
+                    </h2>
+                </a>
             </div>
         </nav>
     </div>

@@ -5,90 +5,109 @@
 {% block content %}
 
 <link rel="stylesheet" href="{{ url_for('static', filename='dataform.css') }}">
-    <br><br>
-    <div class="body-content">
-        <form method="POST">
-            <div class="container">
-                <div class="hero">
-                    <div class="logo">
-                        <img src="../static/LOGO.png" alt="logo" height="150px" width="auto"/>
-                    </div>
-                    <div class="head">
-                        <h1>Detail Update Form</h1>
-                    </div>
+<br><br>
+<div class="body-content">
+    <form method="POST">
+        <div class="container">
+            <div class="hero">
+                <div class="logo">
+                    <img src="../static/LOGO.png" alt="logo" height="150px" width="auto" />
                 </div>
-                <label for="formdate">Form Date:</label>
-                {{ item[8] }}<br><br>
-                <label for="name">Full Name:</label>
-                <input type="text" id="name" name="name" placeholder="Enter full name" value="{{ item[2] }}" required><br><br>
-                <label for="fathername">Father's Name:</label>
-                <input type="text" id="fathername" name="fathername" placeholder="Enter father's full name" value="{{ item[4] }}" required><br><br>
-                <label for="mothername">Mother's Name:</label>
-                <input type="text" id="mothername" name="mothername" placeholder="Enter mother's full name" value="{{ item[3] }}" required><br><br>
-                <label for="grandfathername">Grandfather's Name:</label>
-                <input type="text" id="grandfathername" name="grandfathername" placeholder="Enter grandfather's full name" value="{{ item[5] }}" required><br><br>
-                <label for="gender">Gender:</label><br>
-                <input type="radio" id="male" name="gender" value="Male" {% if item[7] == 'Male' %} checked {% endif %} required>
-                <label for="male">Male</label>
-                <input type="radio" id="female" name="gender" value="Female" {% if item[7] == 'Female' %} checked {% endif %} required>
-                <label for="female">Female</label><br><br>
-                <label for="dob">Date of Birth:</label>
-                <input type="date" id="dob" name="dob" value="{{ item[6] }}" required><br><br>
-                <label for="education">Education:</label>
-                <select id="education" name="education">
-                    <option value="Illiterate" {% if item[9] == "Illiterate" %} selected {% endif %}>Illiterate</option>
-                    <option value="General read and write" {% if item[9] == "General read and write" %} selected {% endif %}>General Read and Write</option>
-                    <option value="Under 10 class" {% if item[9] == "Under 10 class" %} selected {% endif %}>Under 10 class</option>
-                    <option value="SEE" {% if item[9] == "SEE" %} selected {% endif %}>SEE</option>
-                    <option value="+2" {% if item[9] == "+2" %} selected {% endif %}>+2</option>
-                    <option value="Bachelor" {% if item[9] == "Bachelor" %} selected {% endif %}>Bachelor</option>
-                    <option value="Master" {% if item[9] == "Master" %} selected {% endif %}>Master</option>
-                </select><br><br>
-                <div id="reason-uneducation-container">
-                    <label for="reason_for_uneducation">Reason for Uneducation:</label>
-                    <select id="reason_for_uneducation" name="reason_for_uneducation">
-                        <option value="Poverty" {% if item[13] == "Poverty" %} selected {% endif %}>Poverty</option>
-                        <option value="Lack of access" {% if item[13] == "Lack of access" %} selected {% endif %}>Lack of Access to Schools</option>
-                        <option value="Cultural reasons" {% if item[13] == "Cultural reasons" %} selected {% endif %}>Cultural Reasons</option>
-                        <option value="Other" {% if item[13] == "Other" %} selected {% endif %}>Other</option>
-                    </select>
-                </div><br><br>
-                <label for="employed">Employed:</label><br>
-                <input type="radio" id="employed-yes" name="employed" value="Employed" {% if item[10] == 'Employed' %} checked {% endif %} required>
-                <label for="employed-yes">Yes</label>
-                <input type="radio" id="employed-no" name="employed" value="Unemployed" {% if item[10] == 'Unemployed' %} checked {% endif %} required>
-                <label for="employed-no">No</label><br><br>
-                <div id="reason-container">
-                    <label for="reason_for_unemployment">Reason for Unemployment:</label>
-                    <select id="reason_for_unemployment" name="reason_for_unemployment">
-                        <option value="Corruption" {% if item[12] == "Corruption" %} selected {% endif %}>Corruption</option>
-                        <option value="Lack of opportunity" {% if item[12] == "Lack of opportunity" %} selected {% endif %}>Lack of opportunity</option>
-                        <option value="Lack of skill and education" {% if item[12] == "Lack of skill and education" %} selected {% endif %}>Lack of skill and education</option>
-                        <option value="Low salary" {% if item[12] == "Low salary" %} selected {% endif %}>Low salary</option>
-                        <option value="Other" {% if item[12] == "Other" %} selected {% endif %}>Other</option>
-                    </select>
-                </div><br><br>
-                <label for="abroad">Abroad:</label><br>
-                <input type="radio" id="abroad-yes" name="abroad" value="Yes" {% if item[11] == 'Yes' %} checked {% endif %} required>
-                <label for="abroad-yes">Yes</label>
-                <input type="radio" id="abroad-no" name="abroad" value="No" {% if item[11] == 'No' %} checked {% endif %} required>
-                <label for="abroad-no">No</label><br><br>
-                <div id="reason-abroad-container">
-                    <label for="reason_for_abroad">Reason for Going Abroad:</label>
-                    <select id="reason_for_abroad" name="reason_for_abroad">
-                        <option value="Financial Condition" {% if item[14] == "Financial Condition" %} selected {% endif %}>Financial Condition</option>
-                        <option value="Lack of opportunity" {% if item[14] == "Lack of opportunity" %} selected {% endif %}>Lack of opportunity</option>
-                        <option value="Lack of infrastructure" {% if item[14] == "Lack of infrastructure" %} selected {% endif %}>Lack of infrastructure</option>
-                        <option value="Low salary" {% if item[14] == "Low salary" %} selected {% endif %}>Low salary</option>
-                        <option value="Other" {% if item[14] == "Other" %} selected {% endif %}>Other</option>
-                    </select>
-                </div><br><br>
-                <div class="btn">
-                  <input type="submit" value="Submit">
-              </div>
+                <div class="head">
+                    <h1>Detail Update Form</h1>
+                </div>
             </div>
-        </form>
-    </div>
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+            <label for="formdate">Form Date:</label>
+            {{ item[8] }}<br><br>
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter full name" value="{{ item[2] }}"
+                required><br><br>
+            <label for="fathername">Father's Name:</label>
+            <input type="text" id="fathername" name="fathername" placeholder="Enter father's full name"
+                value="{{ item[4] }}" required><br><br>
+            <label for="mothername">Mother's Name:</label>
+            <input type="text" id="mothername" name="mothername" placeholder="Enter mother's full name"
+                value="{{ item[3] }}" required><br><br>
+            <label for="grandfathername">Grandfather's Name:</label>
+            <input type="text" id="grandfathername" name="grandfathername" placeholder="Enter grandfather's full name"
+                value="{{ item[5] }}" required><br><br>
+            <label for="gender">Gender:</label><br>
+            <input type="radio" id="male" name="gender" value="Male" {% if item[7]=='Male' %} checked {% endif %}
+                required>
+            <label for="male">Male</label>
+            <input type="radio" id="female" name="gender" value="Female" {% if item[7]=='Female' %} checked {% endif %}
+                required>
+            <label for="female">Female</label><br><br>
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" value="{{ item[6] }}" required><br><br>
+            <label for="education">Education:</label>
+            <select id="education" name="education">
+                <option value="Illiterate" {% if item[9]=="Illiterate" %} selected {% endif %}>Illiterate</option>
+                <option value="General read and write" {% if item[9]=="General read and write" %} selected {% endif %}>
+                    General Read and Write</option>
+                <option value="Under 10 class" {% if item[9]=="Under 10 class" %} selected {% endif %}>Under 10 class
+                </option>
+                <option value="SEE" {% if item[9]=="SEE" %} selected {% endif %}>SEE</option>
+                <option value="+2" {% if item[9]=="+2" %} selected {% endif %}>+2</option>
+                <option value="Bachelor" {% if item[9]=="Bachelor" %} selected {% endif %}>Bachelor</option>
+                <option value="Master" {% if item[9]=="Master" %} selected {% endif %}>Master</option>
+            </select><br><br>
+            <div id="reason-uneducation-container">
+                <label for="reason_for_uneducation">Reason for Uneducation:</label>
+                <select id="reason_for_uneducation" name="reason_for_uneducation">
+                    <option value="Poverty" {% if item[13]=="Poverty" %} selected {% endif %}>Poverty</option>
+                    <option value="Lack of access" {% if item[13]=="Lack of access" %} selected {% endif %}>Lack of
+                        Access to Schools</option>
+                    <option value="Cultural reasons" {% if item[13]=="Cultural reasons" %} selected {% endif %}>Cultural
+                        Reasons</option>
+                    <option value="Other" {% if item[13]=="Other" %} selected {% endif %}>Other</option>
+                </select>
+            </div><br><br>
+            <label for="employed">Employed:</label><br>
+            <input type="radio" id="employed-yes" name="employed" value="Employed" {% if item[10]=='Employed' %} checked
+                {% endif %} required>
+            <label for="employed-yes">Yes</label>
+            <input type="radio" id="employed-no" name="employed" value="Unemployed" {% if item[10]=='Unemployed' %}
+                checked {% endif %} required>
+            <label for="employed-no">No</label><br><br>
+            <div id="reason-container">
+                <label for="reason_for_unemployment">Reason for Unemployment:</label>
+                <select id="reason_for_unemployment" name="reason_for_unemployment">
+                    <option value="Corruption" {% if item[12]=="Corruption" %} selected {% endif %}>Corruption</option>
+                    <option value="Lack of opportunity" {% if item[12]=="Lack of opportunity" %} selected {% endif %}>
+                        Lack of opportunity</option>
+                    <option value="Lack of skill and education" {% if item[12]=="Lack of skill and education" %}
+                        selected {% endif %}>Lack of skill and education</option>
+                    <option value="Low salary" {% if item[12]=="Low salary" %} selected {% endif %}>Low salary</option>
+                    <option value="Other" {% if item[12]=="Other" %} selected {% endif %}>Other</option>
+                </select>
+            </div><br><br>
+            <label for="abroad">Abroad:</label><br>
+            <input type="radio" id="abroad-yes" name="abroad" value="Yes" {% if item[11]=='Yes' %} checked {% endif %}
+                required>
+            <label for="abroad-yes">Yes</label>
+            <input type="radio" id="abroad-no" name="abroad" value="No" {% if item[11]=='No' %} checked {% endif %}
+                required>
+            <label for="abroad-no">No</label><br><br>
+            <div id="reason-abroad-container">
+                <label for="reason_for_abroad">Reason for Going Abroad:</label>
+                <select id="reason_for_abroad" name="reason_for_abroad">
+                    <option value="Financial Condition" {% if item[14]=="Financial Condition" %} selected {% endif %}>
+                        Financial Condition</option>
+                    <option value="Lack of opportunity" {% if item[14]=="Lack of opportunity" %} selected {% endif %}>
+                        Lack of opportunity</option>
+                    <option value="Lack of infrastructure" {% if item[14]=="Lack of infrastructure" %} selected {% endif
+                        %}>Lack of infrastructure</option>
+                    <option value="Low salary" {% if item[14]=="Low salary" %} selected {% endif %}>Low salary</option>
+                    <option value="Other" {% if item[14]=="Other" %} selected {% endif %}>Other</option>
+                </select>
+            </div><br><br>
+            <div class="btn">
+                <input type="submit" value="Submit">
+            </div>
+        </div>
+    </form>
+</div>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 
 {% endblock %}
