@@ -15,27 +15,34 @@
         {{info}}
         <section id="data-section">
             <h1>Data</h1>
+            <h2 style="margin: 5rem;">Total number of records: {{total}}</h2>
             <table>
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Name</th>
+                        <th>Username</th>
                         <th>Gender</th>
                         <th>Issuedate</th>
                         <th>Employeed</th>
                         <th>Education</th>
                         <th>Abroad</th>
+                        <th>Phone no</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for item in items %}
                         <tr>
-                            <td>{{ item[1].capitalize()  }}</td>
-                            <td>{{ item[2].capitalize()  }}</td>
-                            <td>{{ item[3].capitalize()  }}</td>
-                            <td>{{ item[4].capitalize()  }}</td>
-                            <td>{{ item[5].capitalize()  }}</td>
-                            <td>{{ item[6].capitalize()  }}</td>
+                            <td>{{ item[0] }}</td>
+                            <td>{{ item[1].capitalize() }}</td>
+                            <td>{{ item[2] }}</td> <!-- Display Username -->
+                            <td>{{ item[3].capitalize() }}</td>
+                            <td>{{ item[4].capitalize() }}</td>
+                            <td>{{ item[5].capitalize() }}</td>
+                            <td>{{ item[6].capitalize() }}</td>
+                            <td>{{ item[7].capitalize() }}</td>
+                            <td> {{ item[8] }}</td>
                             <td>
                                 <a href="{{ url_for('update', item_id=item[0]) }}" class="action-button update">Update</a>
                                 {% if role == 'admin' %}
@@ -46,7 +53,6 @@
                     {% endfor %}
                 </tbody>
             </table>
-            <h2 style="margin: 5rem;">Total number of records: {{total}}</h2>
         </section>
     </main>
     <footer>

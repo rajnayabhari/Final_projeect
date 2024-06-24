@@ -7,19 +7,19 @@ def hash_password(password):
 def get_db_connection():
     return psycopg2.connect(
     #for local
-#         database="digi_muni",
-#         user="postgres",
-#         password="@hybesty123",
-#         host="127.0.0.1",
-#         port=5432
+        database="digi_muni",
+        user="postgres",
+        password="@hybesty123",
+        host="127.0.0.1",
+        port=5432
         
         #for render.com
         
-        database="digi_muni",
-        user="digi_muni_user",
-        password="52ODMHwZil8AUVUFP2uOl13ZtiHtJz8j",
-        host="dpg-cpo891bv2p9s73fruoag-a",
-        port="5432"
+    #     database="digi_muni",
+    #     user="digi_muni_user",
+    #     password="52ODMHwZil8AUVUFP2uOl13ZtiHtJz8j",
+    #     host="dpg-cpo891bv2p9s73fruoag-a",
+    #     port="5432"
     )
 def database():
     email='raj@gmail.com'       
@@ -45,7 +45,6 @@ def database():
             cursor.execute("""
             CREATE TABLE IF NOT EXISTS detail (
             Id_no SERIAL PRIMARY KEY NOT NULL,
-            Certificate_no VARCHAR(250) NOT NULL,
             fullname VARCHAR(250) NOT NULL,
             mothername VARCHAR(250) NOT NULL,
             fathername VARCHAR(250) NOT NULL,
@@ -60,6 +59,7 @@ def database():
             reason_for_uneducated VARCHAR(250) DEFAULT '0',
             reason_for_abroad VARCHAR(250) DEFAULT '0',
             USER_ID INT NOT NULL,
+            phone_no varchar(50) not null unique,
             FOREIGN KEY (USER_ID) REFERENCES login (USER_ID)
             );
             """)
